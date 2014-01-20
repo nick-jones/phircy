@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2be0e8eb7d6c8e194732c923cd62b04b",
+    "hash": "93d6ee9f9bf48696f15572f26ba7b1a2",
     "packages": [
         {
             "name": "nick-jones/Phipe",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/Phipe.git",
-                "reference": "918f2c82117690324b5766f49117052ee733d2ae"
+                "reference": "ba13dc33b02993269576cf5fc966bb79279ebc79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/918f2c82117690324b5766f49117052ee733d2ae",
-                "reference": "918f2c82117690324b5766f49117052ee733d2ae",
+                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/ba13dc33b02993269576cf5fc966bb79279ebc79",
+                "reference": "ba13dc33b02993269576cf5fc966bb79279ebc79",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "source": "https://github.com/nick-jones/Phipe/tree/master",
                 "issues": "https://github.com/nick-jones/Phipe/issues"
             },
-            "time": "2013-12-26 00:03:55"
+            "time": "2014-01-20 16:45:41"
         },
         {
             "name": "nick-jones/SimpleConfig",
@@ -49,12 +49,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/SimpleConfig.git",
-                "reference": "a72e84533c9be9fce83e741f4c05393ee045233d"
+                "reference": "9b382bd4edea94de7fe271f81532bfb823d50d5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/SimpleConfig/zipball/a72e84533c9be9fce83e741f4c05393ee045233d",
-                "reference": "a72e84533c9be9fce83e741f4c05393ee045233d",
+                "url": "https://api.github.com/repos/nick-jones/SimpleConfig/zipball/9b382bd4edea94de7fe271f81532bfb823d50d5b",
+                "reference": "9b382bd4edea94de7fe271f81532bfb823d50d5b",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "source": "https://github.com/nick-jones/SimpleConfig/tree/master",
                 "issues": "https://github.com/nick-jones/SimpleConfig/issues"
             },
-            "time": "2013-12-31 05:44:25"
+            "time": "2014-01-20 16:49:44"
         },
         {
             "name": "phergie/phergie-irc-connection",
