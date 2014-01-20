@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$configPath = __DIR__ . '/config.json';
+
+if (!is_readable($configPath)) {
+    throw new \RuntimeException('The config.json file could not be read');
+}
+
+$config = json_decode(file_get_contents($configPath), true);
+
+if (!$config) {
+    throw new \RuntimeException('The config.json file contains invalid JSON');
+}
+
+$phircy = new \Phircy\Application($config);
+$phircy->execute();
