@@ -81,15 +81,24 @@ class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
      * @throws \BadMethodCallException
      */
     public function __call($name, array $arguments) {
-        if (!preg_match('#^write(.+)$#', $name, $matches)) {
-            throw new \BadMethodCallException('Undefined method');
+        if (preg_match('#^write(.+)$#', $name, $matches)) {
+            $this->writeCommand($matches[1], $arguments);
+            return;
         }
 
-        // Construct the generator method name based on the suffix component of the write* method.
-        $generatorMethod = sprintf('irc%s', $matches[1]);
+        throw new \BadMethodCallException('Undefined method');
+    }
+
+    /**
+     * @param string $command The name of the command, e.g. 'ping'
+     * @param array $arguments
+     * @throws \InvalidArgumentException
+     */
+    public function writeCommand($command, array $arguments) {
+        $generatorMethod = sprintf('irc%s', ucfirst(strtolower($command)));
 
         if (!method_exists($this->generator, $generatorMethod)) {
-            throw new \BadMethodCallException(sprintf('Generator method "%s" does not exist', $generatorMethod));
+            throw new \InvalidArgumentException(sprintf('Command "%s" does not exist', $command));
         }
 
         $ircMessage = call_user_func_array(array($this->generator, $generatorMethod), $arguments);

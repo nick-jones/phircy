@@ -25,32 +25,45 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase {
         $this->transport = new IrcTransport($this->proxied, $this->generator);
     }
 
-    public function testMagicCall() {
+    public function testCallHook_Write() {
         $nick = 'Mock';
-        $message = sprintf("NICK :%s\r\n", $nick);
 
         $this->generator->expects($this->once())
             ->method('ircNick')
-            ->with($this->equalTo($nick))
+            ->with($this->equalTo($nick));
+
+        $this->proxied->expects($this->once())
+            ->method('write');
+
+        $this->transport->__call('writeNick', array($nick));
+    }
+
+    public function testCallHook_NonWrite() {
+        $this->setExpectedException('\BadMethodCallException', 'Undefined method');
+
+        $this->transport->__call('foo', array());
+    }
+
+    public function testWriteCommand() {
+        $server = 'irc.mock.example';
+        $message = sprintf("PONG :%s\r\n", $server);
+
+        $this->generator->expects($this->once())
+            ->method('ircPong')
+            ->with($this->equalTo($server))
             ->will($this->returnValue($message));
 
         $this->proxied->expects($this->once())
             ->method('write')
             ->with($this->equalTo($message));
 
-        $this->transport->__call('writeNick', array($nick));
+        $this->transport->writeCommand('pong', array($server));
     }
 
-    public function testMagicCall_NonWrite() {
-        $this->setExpectedException('\BadMethodCallException', 'Undefined method');
+    public function testWriteCommand_InvalidCommand() {
+        $this->setExpectedException('\InvalidArgumentException', 'Command "foo" does not exist');
 
-        $this->transport->__call('foo', array());
-    }
-
-    public function testMagicCall_InvalidWrite() {
-        $this->setExpectedException('\BadMethodCallException', 'Generator method "ircFoo" does not exist');
-
-        $this->transport->__call('writeFoo', array());
+        $this->transport->writeCommand('foo', array());
     }
 
     public function testReadAll() {
