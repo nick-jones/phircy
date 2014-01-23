@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/Phipe.git",
-                "reference": "ba13dc33b02993269576cf5fc966bb79279ebc79"
+                "reference": "8ce295781d99c6b7fb58a663f8cda7908a8d603e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/ba13dc33b02993269576cf5fc966bb79279ebc79",
-                "reference": "ba13dc33b02993269576cf5fc966bb79279ebc79",
+                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/8ce295781d99c6b7fb58a663f8cda7908a8d603e",
+                "reference": "8ce295781d99c6b7fb58a663f8cda7908a8d603e",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "source": "https://github.com/nick-jones/Phipe/tree/master",
                 "issues": "https://github.com/nick-jones/Phipe/issues"
             },
-            "time": "2014-01-20 16:45:41"
+            "time": "2014-01-23 18:54:45"
         },
         {
             "name": "nick-jones/SimpleConfig",
