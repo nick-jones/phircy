@@ -53,6 +53,17 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler->processDisconnect($connections, $connection);
     }
 
+    public function testProcessConnectFailed() {
+        $connections = new \SplObjectStorage();
+        $connection = $this->getMock('\Phircy\Model\Connection');
+
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($this->equalTo('socket.connect_fail'), $this->isInstanceOf('\Phircy\Event\IrcEvent'));
+
+        $this->handler->processConnectFail($connections, $connection);
+    }
+
     public function testProcessRead() {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');

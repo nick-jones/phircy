@@ -24,6 +24,12 @@ interface UpdateHandler {
     public function processDisconnect(\SplObjectStorage $connections, Connection $connection);
 
     /**
+     * @param \SplObjectStorage $connections
+     * @param Connection $connection
+     */
+    public function processConnectFail(\SplObjectStorage $connections, Connection $connection);
+
+    /**
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection
      * @param array $lines

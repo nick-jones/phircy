@@ -45,12 +45,7 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      */
     public function processConnect(\SplObjectStorage $connections, Connection $connection) {
-        $event = new IrcEvent();
-        $event->setConnection($connection);
-        $event->setConnections($connections);
-
-        $this->eventDispatcher
-            ->dispatch('socket.connect', $event);
+        $this->dispatchEvent('socket.connect', $connections, $connection);
     }
 
     /**
@@ -58,12 +53,15 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      */
     public function processDisconnect(\SplObjectStorage $connections, Connection $connection) {
-        $event = new IrcEvent();
-        $event->setConnection($connection);
-        $event->setConnections($connections);
+        $this->dispatchEvent('socket.disconnect', $connections, $connection);
+    }
 
-        $this->eventDispatcher
-            ->dispatch('socket.disconnect', $event);
+    /**
+     * @param \SplObjectStorage $connections
+     * @param Connection $connection
+     */
+    public function processConnectFail(\SplObjectStorage $connections, Connection $connection) {
+        $this->dispatchEvent('socket.connect_fail', $connections, $connection);
     }
 
     /**
@@ -73,7 +71,7 @@ class DispatchingUpdateHandler implements UpdateHandler {
      */
     public function processRead(\SplObjectStorage $connections, Connection $connection, array $lines) {
         foreach ($lines as $line) {
-            $this->processIrcLine($connections, $connection, $line, 'irc');
+            $this->dispatchIrcEvent($connections, $connection, $line, 'irc');
         }
     }
 
@@ -84,8 +82,24 @@ class DispatchingUpdateHandler implements UpdateHandler {
      */
     public function processWrite(\SplObjectStorage $connections, Connection $connection, array $lines) {
         foreach ($lines as $line) {
-            $this->processIrcLine($connections, $connection, $line, 'irc.write');
+            $this->dispatchIrcEvent($connections, $connection, $line, 'irc.write');
         }
+    }
+
+    /**
+     * Dispatches a regular event based on the supplied arguments.
+     *
+     * @param string $eventName
+     * @param \SplObjectStorage $connections
+     * @param Connection $connection
+     */
+    protected function dispatchEvent($eventName, \SplObjectStorage $connections, Connection $connection) {
+        $event = new IrcEvent();
+        $event->setConnection($connection);
+        $event->setConnections($connections);
+
+        $this->eventDispatcher
+            ->dispatch($eventName, $event);
     }
 
     /**
@@ -96,7 +110,7 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param $line
      * @param $eventPrefix
      */
-    protected function processIrcLine(\SplObjectStorage $connections, Connection $connection, $line, $eventPrefix) {
+    protected function dispatchIrcEvent(\SplObjectStorage $connections, Connection $connection, $line, $eventPrefix) {
         $event = $this->eventFromIrcLine($line);
         $event->setConnection($connection);
         $event->setConnections($connections);

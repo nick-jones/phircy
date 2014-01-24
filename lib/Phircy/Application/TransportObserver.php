@@ -95,6 +95,10 @@ class TransportObserver implements \SplObserver {
                 return $this->handler
                     ->processDisconnect($this->connections, $connection);
 
+            case IrcTransport::EVENT_CONNECT_FAIL:
+                return $this->handler
+                    ->processConnectFail($this->connections, $connection);
+
             case IrcTransport::EVENT_READ:
                 return $this->handler
                     ->processRead($this->connections, $connection, $connection->transport->readLines());

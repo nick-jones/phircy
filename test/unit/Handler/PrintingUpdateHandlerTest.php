@@ -51,6 +51,16 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->assertRegExp(sprintf('/%s Disconnected!/', self::PREFIX_REGEX), $output);
     }
 
+    public function testProcessConnectFail() {
+        $connections = new \SplObjectStorage();
+        $connection = $this->createMockConnection();
+
+        $this->handler->processConnectFail($connections, $connection);
+
+        $output = $this->getHandleContents();
+        $this->assertRegExp(sprintf('/%s Connect failed!/', self::PREFIX_REGEX), $output);
+    }
+
     public function testProcessRead() {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();

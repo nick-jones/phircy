@@ -66,6 +66,14 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_DISCONNECT);
     }
 
+    public function testUpdate_ConnectFail() {
+        $this->handler->expects($this->once())
+            ->method('processConnectFail')
+            ->with($this->equalTo($this->connections), $this->equalTo($this->connection));
+
+        $this->observer->update($this->transport, IrcTransport::EVENT_CONNECT_FAIL);
+    }
+
     public function testUpdate_Read() {
         $data = array('mock');
 
