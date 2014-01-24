@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/Phipe.git",
-                "reference": "8ce295781d99c6b7fb58a663f8cda7908a8d603e"
+                "reference": "09df740eaae39b894e099f8358a10cf77489ff54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/8ce295781d99c6b7fb58a663f8cda7908a8d603e",
-                "reference": "8ce295781d99c6b7fb58a663f8cda7908a8d603e",
+                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/09df740eaae39b894e099f8358a10cf77489ff54",
+                "reference": "09df740eaae39b894e099f8358a10cf77489ff54",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "source": "https://github.com/nick-jones/Phipe/tree/master",
                 "issues": "https://github.com/nick-jones/Phipe/issues"
             },
-            "time": "2014-01-23 18:54:45"
+            "time": "2014-01-24 15:39:33"
         },
         {
             "name": "nick-jones/SimpleConfig",
@@ -532,12 +532,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca"
+                "reference": "30a3ed4fa78149b2b191aaca72b5012270ee4ce3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca",
-                "reference": "0a32f059e6e66cdfdd0d7c757646fdcbf822b0ca",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/30a3ed4fa78149b2b191aaca72b5012270ee4ce3",
+                "reference": "30a3ed4fa78149b2b191aaca72b5012270ee4ce3",
                 "shasum": ""
             },
             "require": {
@@ -598,7 +598,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-15 07:18:27"
+            "time": "2014-01-23 22:13:15"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
