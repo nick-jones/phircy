@@ -178,7 +178,7 @@ class Application {
      * @return IrcTransport
      */
     protected function createTransportFromNetwork(IrcFactory $transportFactory, Network $network) {
-        $server = $network->servers[0];
+        $server = $network->nextServer();
 
         return $transportFactory
             ->createConnection($server->host, $server->port, $server->ssl);
