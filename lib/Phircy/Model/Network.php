@@ -32,6 +32,11 @@ class Network {
     public $connected = FALSE;
 
     /**
+     * @var int
+     */
+    protected $serverPosition = 0;
+
+    /**
      * @param Server[] $servers
      * @param string $name
      */
@@ -60,5 +65,16 @@ class Network {
      */
     public function findChannelByName($name) {
         return $this->channels[$name];
+    }
+
+    /**
+     * @return Server
+     */
+    public function nextServer() {
+        $max = count($this->servers) - 1;
+        $position = min($max, $this->serverPosition);
+        $this->serverPosition = $position === $max ? 0 : $position + 1;
+
+        return $this->servers[$position];
     }
 }

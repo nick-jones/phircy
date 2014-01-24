@@ -49,4 +49,15 @@ class NetworkTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertNull($result);
     }
+
+    public function testNextServer() {
+        $server1 = $this->getMock('\Phircy\Model\Server', array(), array('127.0.0.1'));
+        $server2 = $this->getMock('\Phircy\Model\Server', array(), array('127.0.0.2'));
+
+        $this->network->servers = array($server1, $server2);
+
+        $this->assertEquals($server1, $this->network->nextServer());
+        $this->assertEquals($server2, $this->network->nextServer());
+        $this->assertEquals($server1, $this->network->nextServer());
+    }
 }
