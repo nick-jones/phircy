@@ -69,6 +69,40 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $this->subscriber->onSocketDisconnect($event, NULL, $dispatcher);
     }
 
+    public function testOnSocketConnectFail() {
+        $host = 'irc.mock.example';
+        $port = 7000;
+        $ssl = TRUE;
+
+        $transport = $this->getMock('\Phircy\Connection\IrcTransport');
+
+        $transport->expects($this->once())
+            ->method('setHost')
+            ->with($this->equalTo($host));
+
+        $transport->expects($this->once())
+            ->method('setPort')
+            ->with($this->equalTo($port));
+
+        $transport->expects($this->once())
+            ->method('setSsl')
+            ->with($this->equalTo($ssl));
+
+        $network = $this->getMock('\Phircy\Model\Network');
+
+        $network->expects($this->once())
+            ->method('nextServer')
+            ->will($this->returnValue(new \Phircy\Model\Server($host, $port, $ssl)));
+
+        $connection = new \Phircy\Model\Connection();
+        $connection->transport = $transport;
+        $connection->network = $network;
+
+        $event = $this->createMockEvent(array(), $connection);
+
+        $this->subscriber->onSocketConnectFail($event);
+    }
+
     public function testOnIrc001() {
         $event = $this->createMockEvent();
 

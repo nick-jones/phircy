@@ -33,6 +33,7 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
         return array(
             'socket.connect' => array('onSocketConnect', Priorities::PHIRCY_STANDARD),
             'socket.disconnect' => array('onSocketDisconnect', Priorities::PHIRCY_PRE),
+            'socket.connect_fail' => array('onSocketConnectFail', Priorities::PHIRCY_STANDARD),
             'irc.001' => array('onIrc001', Priorities::PHIRCY_STANDARD),
             'irc.connect' => array('onIrcConnect', Priorities::PHIRCY_STANDARD),
             'irc.ping' => array('onIrcPing', Priorities::PHIRCY_STANDARD)
@@ -73,6 +74,25 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      */
     public static function onSocketDisconnect(IrcEvent $event, $eventName, EventDispatcherInterface $dispatcher) {
         $dispatcher->dispatch('irc.disconnect', $event);
+    }
+
+    /**
+     * Handles socket connect failures. This updates the transport instance with an alternative set of details,
+     * if available. This behaviour could also be achieved by injecting our own Phipe reconnect strategy; this
+     * should be considered in the future, as it may be a more robust way to handle this.
+     *
+     * @param IrcEvent $event
+     */
+    public static function onSocketConnectFail(IrcEvent $event) {
+        $connection = $event->getConnection();
+        $transport = $connection->transport;
+
+        $server = $connection->network
+            ->nextServer();
+
+        $transport->setHost($server->host);
+        $transport->setPort($server->port);
+        $transport->setSsl($server->ssl);
     }
 
     /**
