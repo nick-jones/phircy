@@ -35,6 +35,7 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
             'socket.disconnect' => array('onSocketDisconnect', Priorities::PHIRCY_PRE),
             'socket.connect_fail' => array('onSocketConnectFail', Priorities::PHIRCY_STANDARD),
             'irc.001' => array('onIrc001', Priorities::PHIRCY_STANDARD),
+            'irc.433' => array('onIrc433', Priorities::PHIRCY_STANDARD),
             'irc.connect' => array('onIrcConnect', Priorities::PHIRCY_STANDARD),
             'irc.ping' => array('onIrcPing', Priorities::PHIRCY_STANDARD)
         );
@@ -122,6 +123,21 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
         $event->getConnection()
             ->transport
             ->writePong($server);
+    }
+
+    /**
+     * 433 = ERR_NICKNAMEINUSE. An alternative nickname will be sent to the server, if one is available.
+     *
+     * @param IrcEvent $event
+     */
+    public static function onIrc433(IrcEvent $event) {
+        $connection = $event->getConnection();
+        $details = self::networkDetailsFromConnection($connection);
+
+        if (isset($details['altnick'])) {
+            $connection->transport
+                ->writeNick($details['altnick']);
+        }
     }
 
     /**

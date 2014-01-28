@@ -17,6 +17,7 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         'networks' => array(
             array(
                 'nick' => 'mock_nick',
+                'altnick' => 'mock_altnick',
                 'username' => 'mock_username',
                 'realname' => 'mock_realname',
                 'channels' => array('#mock')
@@ -148,5 +149,23 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $event = $this->createMockEvent(array($server), $connection);
 
         $this->subscriber->onIrcPing($event);
+    }
+
+    public function testOnIrc433() {
+        $altnick = 'mock_altnick';
+
+        $transport = $this->getMock('\Phircy\Connection\IrcTransport', array('writeNick'));
+
+        $transport->expects($this->once())
+            ->method('writeNick')
+            ->with($this->equalTo($altnick));
+
+        $connection = new \Phircy\Model\Connection();
+        $connection->transport = $transport;
+        $connection->id = 0;
+
+        $event = $this->createMockEvent(array(), $connection);
+
+        $this->subscriber->onIrc433($event);
     }
 }
