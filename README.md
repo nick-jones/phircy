@@ -1,6 +1,6 @@
 # Phircy (Alpha)
 
-Phircy is an IRC client library, for PHP.
+Phircy is an IRC bot library, for PHP.
 
 It is built on top of [nick-jones/Phipe](https://github.com/nick-jones/Phipe), various
 [Phergie](https://github.com/phergie) components, and the
@@ -17,17 +17,17 @@ the project root.
 
 ## Usage
 
-Phircy requires a config file to be present in the project root. Simply `cp config.json.dist config.json` and fill in
-connection details for all the networks you wish to connect to.
+Phircy requires a config file to be present in the project root. Simply `cp config.json.dist config.json`, and update
+the following information:
+
+* `networks`: fill in bot details. The servers field be set to a string, or an array if you wish to add fallback servers.
+* `plugins`: provide the names of all the plugins you wish to be loaded.
 
 Then simply execute `./phircy`
 
-Please note that currently there are no mechanisms for automatically registering listeners, so the IRC session will
-simply sit idle.
-
 If you wish to run the application from other locations, or as a dependency of another project, then you simply need
-to create an instance of the Application class, supplying connection details. Listeners can also be provided at this
-stage.
+to create an instance of the `Application` class, supplying connection details. Listeners, subscribers and plugins can
+also be provided at this stage.
 
 ```php
 $phircy = new \Phircy\Application([
@@ -41,10 +41,59 @@ $phircy = new \Phircy\Application([
             'channels' => ['#']
         ]
     ],
-    'listeners' => $listeners
+    'listeners' => [],
+    'subscribers' => [],
+    'plugins' => []
 ]);
 
 $phircy->execute();
+```
+
+## Plugins
+
+Currently plugins should be placed within the [`plugins/`](plugins/) (though this is liable to change at this stage.)
+
+Plugins should extends `\Phircy\Plugin\Plugin`, be defined within the `\Phircy\Plugins` namespace and should register
+matches and/or listeners for handling IRC events.
+
+Matches are ways to register listeners which detect when a channel command occurs, e.g. `!flip`. The matching system
+looks for `!` prefixes by default, so you only need indicate that `flip` be matched against.  Matches can be registered
+by invoking `$this->match($eventName, callable $callback)` from within a plugin class. Regular expression based matching
+is also available via the `matchRegex` method.
+
+Listeners are of the same flavour as the standard listeners that can be supplied to Phircy. They can hook into
+any flavour of events emitted by the application. Listeners can be registered via the listen method:
+`$this->listen($eventName, callable $callback)`.
+
+A basic example of a plugin that performs a "coin flip" when `!flip` is sent to a channel:
+
+```php
+<?php
+
+namespace Phircy\Plugins;
+
+class Flip extends \Phircy\Plugin\Plugin {
+    /**
+     * Create a matcher for the !flip command.
+     */
+    public function __construct() {
+        $this->match('flip', array($this, 'onFlip'));
+    }
+
+    /**
+     * @param \Phircy\Event\TargetedIrcEvent $event
+     */
+    public function onFlip(\Phircy\Event\TargetedIrcEvent $event) {
+        static $sides = array('heads', 'tails');
+
+        $params = $event->getParams();
+        $result = $sides[mt_rand(0, 1)];
+        $response = sprintf('flip result: %s', $result);
+
+        $event->getTransport()
+            ->writePrivmsg($params['receivers'], $response);
+    }
+}
 ```
 
 ## Unit Tests
