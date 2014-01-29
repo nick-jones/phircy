@@ -1,0 +1,5 @@
+<?php
+
+namespace Phircy\Plugins;
+
+class %s extends \Phircy\Plugin\Plugin { }
