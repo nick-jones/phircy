@@ -22,4 +22,15 @@ class IrcEventTest extends \PHPUnit_Framework_TestCase {
     public function testGetConnections() {
         $this->assertEquals(NULL, $this->event->getConnections());
     }
+
+    public function testGetTransport() {
+        $transport = $this->getMock('\Phircy\Connection\IrcTransport');
+
+        $connection = new \Phircy\Model\Connection();
+        $connection->transport = $transport;
+
+        $this->event->setConnection($connection);
+
+        $this->assertEquals($transport, $this->event->getTransport());
+    }
 }

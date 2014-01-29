@@ -33,4 +33,15 @@ class IrcEvent extends \Symfony\Component\EventDispatcher\Event implements \Pher
     public function getConnections() {
         return $this->connections;
     }
+
+    /**
+     * Shortcut to retrieve the connections transport instance, as this is a common requirement when dealing
+     * with event instances.
+     *
+     * @return \Phircy\Connection\IrcTransport
+     */
+    public function getTransport() {
+        return $this->getConnection()
+            ->transport;
+    }
 }
