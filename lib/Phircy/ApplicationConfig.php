@@ -26,7 +26,12 @@ class ApplicationConfig extends \SimpleConfig\Container {
         $values = array(
             'networks' => array(),
             'listeners' => array(),
-            'subscribers' => array()
+            'subscribers' => array(),
+            'plugins' => array(),
+            'plugins_path' => implode(
+                DIRECTORY_SEPARATOR,
+                array(__DIR__, '..', '..', 'plugins')
+            )
         );
 
         return $values;
@@ -60,6 +65,9 @@ class ApplicationConfig extends \SimpleConfig\Container {
             },
             'core.transport_factory' => function() {
                 return new \Phipe\Connection\Stream\StreamFactory();
+            },
+            'core.plugin_manager' => function() {
+                return new \Phircy\Plugin\PluginManager($this['plugins'], $this['plugins_path']);
             }
         );
 

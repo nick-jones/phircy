@@ -11,7 +11,9 @@ use Phircy\Handler\DispatchingUpdateHandler;
 use Phircy\Handler\PrintingUpdateHandler;
 use Phircy\Model\Network;
 use Phircy\Parser\IrcParser;
+use Phircy\Plugin\PluginManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Main Phircy application class. This consumes the config to construct everything relevant to execute and orchestrate
@@ -24,6 +26,11 @@ class Application {
      * @var array
      */
     protected $config;
+
+    /**
+     * @var PluginManager
+     */
+    protected $pluginManager;
 
     /**
      * @var EventDispatcherInterface
@@ -55,6 +62,9 @@ class Application {
      * Main application run method.
      */
     public function execute() {
+        $this->pluginManager = $this->getPluginManager();
+        $this->pluginManager->load();
+
         $this->eventDispatcher = $this->getEventDispatcher();
         $this->prepareEventDispatcher($this->eventDispatcher);
 
@@ -74,7 +84,7 @@ class Application {
      *
      * @return array
      */
-    public function createPhipeConfiguration() {
+    protected function createPhipeConfiguration() {
         $connections = $this->createConnectionsFromConfig();
         $factory = $this->getIrcConnectionFactory();
 
@@ -123,17 +133,38 @@ class Application {
      * @param EventDispatcherInterface $eventDispatcher
      */
     protected function prepareEventDispatcher(EventDispatcherInterface $eventDispatcher) {
-        $subscribers = array_merge(
-            $this->config['core.subscribers'],
-            $this->config['subscribers']
-        );
+        $this->addSubscribersToEventDispatcher($this->config['core.subscribers'], $eventDispatcher);
+        $this->addSubscribersToEventDispatcher($this->config['subscribers'], $eventDispatcher);
+        $this->addListenersToEventDispatcher($this->config['listeners'], $eventDispatcher);
 
+        foreach ($this->pluginManager->getPlugins() as $plugin) {
+            $this->addListenersToEventDispatcher($plugin->getListeners(), $eventDispatcher);
+        }
+    }
+
+    /**
+     * Adds the supplied subscribers to the also supplied dispatcher instance.
+     *
+     * @param EventSubscriberInterface[] $subscribers
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    protected function addSubscribersToEventDispatcher($subscribers, EventDispatcherInterface $eventDispatcher) {
         foreach ($subscribers as $subscriber) {
             $eventDispatcher->addSubscriber($subscriber);
         }
+    }
 
-        foreach ($this->config['listeners'] as $eventName => $listener) {
-            $eventDispatcher->addListener($eventName, $listener);
+    /**
+     * Adds the supplied listeners to the also supplied dispatcher instance.
+     *
+     * @param callable[] $listeners
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    protected function addListenersToEventDispatcher($listeners, EventDispatcherInterface $eventDispatcher) {
+        foreach ($listeners as $eventName => $callbacks) {
+            foreach ($callbacks as $callback) {
+                $eventDispatcher->addListener($eventName, $callback);
+            }
         }
     }
 
@@ -242,5 +273,12 @@ class Application {
      */
     protected function getIrcConnectionFactory() {
         return $this->config['irc.connection_factory'];
+    }
+
+    /**
+     * @return PluginManager
+     */
+    protected function getPluginManager() {
+        return $this->config['core.plugin_manager'];
     }
 }

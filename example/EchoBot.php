@@ -3,17 +3,19 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $listeners = [
-    'irc.privmsg' => function(\Phircy\Event\TargetedIrcEvent $event) {
-        $params = $event->getParams();
+    'irc.privmsg' => [
+        function(\Phircy\Event\TargetedIrcEvent $event) {
+            $params = $event->getParams();
 
-        if (!preg_match('/^say (.+)/', $params['text'], $matches)) {
-            return;
+            if (!preg_match('/^say (.+)/', $params['text'], $matches)) {
+                return;
+            }
+
+            $event->getConnection()
+                ->transport
+                ->writePrivmsg($params['receivers'], $matches[1]);
         }
-
-        $event->getConnection()
-            ->transport
-            ->writePrivmsg($params['receivers'], $matches[1]);
-    }
+    ]
 ];
 
 $phircy = new \Phircy\Application([

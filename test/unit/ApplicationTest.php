@@ -48,6 +48,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
         $coreSubscriber = $this->getMock('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $listener = function() {};
 
+        $plugin = $this->getMock('\Phircy\Plugin\Plugin');
+
+        $plugin->expects($this->any())
+            ->method('getListeners')
+            ->will($this->returnValue(array('irc.privmsg' => array($listener))));
+
         $eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $eventDispatcher->expects($this->exactly(2))
@@ -57,7 +63,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
         $eventDispatcher->expects($this->exactly(2))
             ->method('addSubscriber');
 
-        $eventDispatcher->expects($this->once())
+        $eventDispatcher->expects($this->exactly(2))
             ->method('addListener');
 
         $ircFactory = $this->getMock('\Phircy\Connection\IrcFactory', array(), array(
@@ -73,7 +79,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
         $this->application->setConfig(array(
             'subscribers' => array($subscriber),
             'core.subscribers' => array($coreSubscriber),
-            'listeners' => array($listener),
+            'listeners' => array('irc.privmsg' => array($listener)),
+            'plugins' => array($plugin),
             'core.event_dispatcher' => $eventDispatcher,
             'networks' => $networks,
             'irc.connection_factory' => $ircFactory
