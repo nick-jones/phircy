@@ -64,7 +64,9 @@ class Network {
      * @return Channel
      */
     public function findChannelByName($name) {
-        return $this->channels[$name];
+        return array_key_exists($name, $this->channels)
+            ? $this->channels[$name]
+            : NULL;
     }
 
     /**
