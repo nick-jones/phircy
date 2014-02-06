@@ -1,16 +1,24 @@
 {
     "name": "nick-jones/Phircy",
 
+    "description": "IRC bot library",
+
+    "keywords": ["irc", "bot", "client"],
+
     "authors": [{
         "name": "Nicholas Jones"
     }],
 
+    "license": "MIT",
+
     "minimum-stability": "dev",
+
+    "prefer-stable": true,
 
     "require": {
         "php": ">=5.4",
         "nick-jones/Phipe": "dev-master",
-        "nick-jones/SimpleConfig": "dev-master",
+        "nick-jones/simpleconfig": "~0.1",
         "symfony/event-dispatcher": "2.5.*@dev",
         "phergie/phergie-irc-event": "dev-event.fixed",
         "phergie/phergie-irc-parser": "1.3.0",
@@ -29,10 +37,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/nick-jones/phergie-irc-event"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/nick-jones/SimpleConfig"
         }
     ],
 
