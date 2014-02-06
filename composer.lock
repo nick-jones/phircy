@@ -3,24 +3,24 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "93d6ee9f9bf48696f15572f26ba7b1a2",
+    "hash": "9b88d96a2dc485bffe997ed4360b325a",
     "packages": [
         {
-            "name": "nick-jones/Phipe",
+            "name": "nick-jones/phipe",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/Phipe.git",
-                "reference": "cc94b1a2d599fbd6d54cd90a2cf3db27ecd84470"
+                "reference": "e83f63c9c731f1af77b51e196abfda15ad599ffd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/cc94b1a2d599fbd6d54cd90a2cf3db27ecd84470",
-                "reference": "cc94b1a2d599fbd6d54cd90a2cf3db27ecd84470",
+                "url": "https://api.github.com/repos/nick-jones/Phipe/zipball/e83f63c9c731f1af77b51e196abfda15ad599ffd",
+                "reference": "e83f63c9c731f1af77b51e196abfda15ad599ffd",
                 "shasum": ""
             },
             "require": {
-                "nick-jones/simpleconfig": "dev-master",
+                "nick-jones/simpleconfig": "~0.1",
                 "php": ">=5.4"
             },
             "require-dev": {
@@ -32,29 +32,38 @@
                     "Phipe": "lib/"
                 }
             },
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Nicholas Jones"
                 }
             ],
+            "description": "Phipe is a parallel connection handling library",
+            "keywords": [
+                "connection",
+                "parallel",
+                "socket"
+            ],
             "support": {
                 "source": "https://github.com/nick-jones/Phipe/tree/master",
                 "issues": "https://github.com/nick-jones/Phipe/issues"
             },
-            "time": "2014-01-24 17:22:19"
+            "time": "2014-02-06 14:39:14"
         },
         {
-            "name": "nick-jones/SimpleConfig",
-            "version": "dev-master",
+            "name": "nick-jones/simpleconfig",
+            "version": "v0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nick-jones/SimpleConfig.git",
-                "reference": "9b382bd4edea94de7fe271f81532bfb823d50d5b"
+                "reference": "d828e18a87e52bb2b22448bcfb471aac17cb90d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nick-jones/SimpleConfig/zipball/9b382bd4edea94de7fe271f81532bfb823d50d5b",
-                "reference": "9b382bd4edea94de7fe271f81532bfb823d50d5b",
+                "url": "https://api.github.com/repos/nick-jones/SimpleConfig/zipball/d828e18a87e52bb2b22448bcfb471aac17cb90d7",
+                "reference": "d828e18a87e52bb2b22448bcfb471aac17cb90d7",
                 "shasum": ""
             },
             "require": {
@@ -69,16 +78,22 @@
                     "SimpleConfig": "lib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Nicholas Jones"
                 }
             ],
-            "support": {
-                "source": "https://github.com/nick-jones/SimpleConfig/tree/master",
-                "issues": "https://github.com/nick-jones/SimpleConfig/issues"
-            },
-            "time": "2014-01-20 16:49:44"
+            "description": "A basic configuration container class",
+            "keywords": [
+                "config",
+                "configuration",
+                "container"
+            ],
+            "time": "2014-02-06 14:10:45"
         },
         {
             "name": "phergie/phergie-irc-connection",
@@ -231,12 +246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "a37a9430e2eafb6a66de240ac13f91b45b4c3d37"
+                "reference": "3a6d2d87fc7d25c773ffdeaa19210090ae1b593b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/a37a9430e2eafb6a66de240ac13f91b45b4c3d37",
-                "reference": "a37a9430e2eafb6a66de240ac13f91b45b4c3d37",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/3a6d2d87fc7d25c773ffdeaa19210090ae1b593b",
+                "reference": "3a6d2d87fc7d25c773ffdeaa19210090ae1b593b",
                 "shasum": ""
             },
             "require": {
@@ -278,28 +293,28 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-07 13:29:57"
+            "time": "2014-02-04 15:16:44"
         }
     ],
     "packages-dev": [
         {
             "name": "phpunit/php-code-coverage",
-            "version": "1.2.x-dev",
+            "version": "1.2.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6f5fe28389462fbfe9420ddbcc734be4691424f5"
+                "reference": "6ba4ed2895d538a039d5d5866edc4ec0424c7852"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6f5fe28389462fbfe9420ddbcc734be4691424f5",
-                "reference": "6f5fe28389462fbfe9420ddbcc734be4691424f5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6ba4ed2895d538a039d5d5866edc4ec0424c7852",
+                "reference": "6ba4ed2895d538a039d5d5866edc4ec0424c7852",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "phpunit/php-file-iterator": ">=1.3.0@stable",
-                "phpunit/php-text-template": ">=1.1.1@stable",
+                "phpunit/php-text-template": ">=1.2.0@stable",
                 "phpunit/php-token-stream": ">=1.1.3@stable"
             },
             "require-dev": {
@@ -341,11 +356,11 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-25 07:52:49"
+            "time": "2014-02-03 07:44:47"
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "dev-master",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
@@ -390,16 +405,16 @@
         },
         {
             "name": "phpunit/php-text-template",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-text-template.git",
-                "reference": "1eeef106193d2f8c539728e566bb4793071a9e18"
+                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/1eeef106193d2f8c539728e566bb4793071a9e18",
-                "reference": "1eeef106193d2f8c539728e566bb4793071a9e18",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
+                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
                 "shasum": ""
             },
             "require": {
@@ -430,11 +445,11 @@
             "keywords": [
                 "template"
             ],
-            "time": "2013-01-07 10:56:17"
+            "time": "2014-01-30 17:20:04"
         },
         {
             "name": "phpunit/php-timer",
-            "version": "dev-master",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
@@ -478,16 +493,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "dev-master",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "292f4d5772dad5a12775be69f4a8dd663b20f103"
+                "reference": "5220af2a7929aa35cf663d97c89ad3d50cf5fa3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/292f4d5772dad5a12775be69f4a8dd663b20f103",
-                "reference": "292f4d5772dad5a12775be69f4a8dd663b20f103",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/5220af2a7929aa35cf663d97c89ad3d50cf5fa3e",
+                "reference": "5220af2a7929aa35cf663d97c89ad3d50cf5fa3e",
                 "shasum": ""
             },
             "require": {
@@ -524,20 +539,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2013-10-21 14:03:39"
+            "time": "2013-09-13 04:58:23"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.x-dev",
+            "version": "3.7.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "641cd682a2cdd8c7dd7b018741f33b44d5b2ce0f"
+                "reference": "2f33258fa5a0c330515b7deba2bc040fa5c3953b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/641cd682a2cdd8c7dd7b018741f33b44d5b2ce0f",
-                "reference": "641cd682a2cdd8c7dd7b018741f33b44d5b2ce0f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2f33258fa5a0c330515b7deba2bc040fa5c3953b",
+                "reference": "2f33258fa5a0c330515b7deba2bc040fa5c3953b",
                 "shasum": ""
             },
             "require": {
@@ -598,38 +613,30 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-25 07:51:18"
+            "time": "2014-01-31 08:54:33"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "1.2.x-dev",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "c9d44561ac41ab2dddf251c471998f8fc370b6c9"
+                "reference": "5794e3c5c5ba0fb037b11d8151add2a07fa82875"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/c9d44561ac41ab2dddf251c471998f8fc370b6c9",
-                "reference": "c9d44561ac41ab2dddf251c471998f8fc370b6c9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5794e3c5c5ba0fb037b11d8151add2a07fa82875",
+                "reference": "5794e3c5c5ba0fb037b11d8151add2a07fa82875",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "phpunit/php-text-template": ">=1.1.1@stable"
             },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*@dev"
-            },
             "suggest": {
                 "ext-soap": "*"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
             "autoload": {
                 "classmap": [
                     "PHPUnit/"
@@ -655,21 +662,21 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-01-26 15:45:02"
+            "time": "2013-01-13 10:24:48"
         },
         {
             "name": "symfony/yaml",
-            "version": "dev-master",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "9921872611710df49cf035c259e5a461ea2d0f8c"
+                "reference": "4e1a237fc48145fae114b96458d799746ad89aa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/9921872611710df49cf035c259e5a461ea2d0f8c",
-                "reference": "9921872611710df49cf035c259e5a461ea2d0f8c",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4e1a237fc48145fae114b96458d799746ad89aa0",
+                "reference": "4e1a237fc48145fae114b96458d799746ad89aa0",
                 "shasum": ""
             },
             "require": {
@@ -678,7 +685,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -702,7 +709,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-07 13:29:57"
+            "time": "2013-12-28 08:12:03"
         }
     ],
     "aliases": [
@@ -711,7 +718,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "nick-jones/phipe": 20,
-        "nick-jones/simpleconfig": 20,
         "symfony/event-dispatcher": 20,
         "phergie/phergie-irc-event": 20
     },
