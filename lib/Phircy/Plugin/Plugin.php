@@ -3,6 +3,7 @@
 namespace Phircy\Plugin;
 
 use Phircy\Matcher\CommandMatcher;
+use Phircy\Matcher\PatternMatcher;
 use Phircy\Matcher\RegexMatcher;
 
 /**
@@ -34,6 +35,22 @@ abstract class Plugin {
      */
     protected function match($command, callable $callback) {
         $matcher = new CommandMatcher($this->prefix . $command);
+        $this->listen('irc.privmsg', new FilteringCallback($matcher, $callback));
+    }
+
+    /**
+     * This allows patterns to watch for text based on wildcard pattern expressions. Glob-style patterns
+     * are permitted, with the following constructs available:
+     *
+     *  - Wildcard multiple: *
+     *  - Wildcard single: ?
+     *  - Grouping, ranges, classes: [abc], [a-z], [!x], [^x], [[:alpha:]]
+     *
+     * @param string $pattern Glob-style wildcard pattern
+     * @param callable $callback Callback to be invoked on successful match
+     */
+    protected function matchPattern($pattern, callable $callback) {
+        $matcher = new PatternMatcher($pattern);
         $this->listen('irc.privmsg', new FilteringCallback($matcher, $callback));
     }
 
