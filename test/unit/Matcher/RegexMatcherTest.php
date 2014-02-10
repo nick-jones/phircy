@@ -4,7 +4,7 @@ namespace Phircy\Matcher;
 
 class RegexMatcherTest extends \PHPUnit_Framework_TestCase {
     /**
-     * @var CommandMatcher
+     * @var RegexMatcher
      */
     protected $matcher;
 
