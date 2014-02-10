@@ -59,7 +59,8 @@ matches and/or listeners for handling IRC events.
 Matches are ways to register listeners which detect when a channel command occurs, e.g. `!flip`. The matching system
 looks for `!` prefixes by default, so you only need indicate that `flip` be matched against.  Matches can be registered
 by invoking `$this->match($eventName, callable $callback)` from within a plugin class. Regular expression based matching
-is also available via the `matchRegex` method.
+is available via the `matchRegex()` method, and standard wildcard matching is available via the `matchPattern()`
+method.
 
 Listeners are of the same flavour as the standard listeners that can be supplied to Phircy. They can hook into
 any flavour of events emitted by the application. Listeners can be registered via the listen method:
