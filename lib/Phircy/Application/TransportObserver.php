@@ -24,6 +24,19 @@ class TransportObserver implements \SplObserver {
     protected $connections;
 
     /**
+     * Mapping of event -> internal handler method.
+     *
+     * @var array
+     */
+    protected static $eventMethodMap = array(
+        IrcTransport::EVENT_CONNECT => 'pushConnectToHandler',
+        IrcTransport::EVENT_DISCONNECT => 'pushDisconnectToHandler',
+        IrcTransport::EVENT_CONNECT_FAIL => 'pushConnectFailedToHandler',
+        IrcTransport::EVENT_READ => 'pushEventReadToHandler',
+        IrcTransport::EVENT_WRITE => 'pushEventWriteToHandler',
+    );
+
+    /**
      * @param \SplObjectStorage|Connection[] $connections
      * @param UpdateHandler $handler
      */
@@ -83,33 +96,55 @@ class TransportObserver implements \SplObserver {
      * @param \Phircy\Model\Connection $connection
      * @param mixed $event
      * @param mixed $data
-     * @return bool
      */
     protected function pushToHandler(Connection $connection, $event, $data) {
-        switch ($event) {
-            case IrcTransport::EVENT_CONNECT:
-                return $this->handler
-                    ->processConnect($this->connections, $connection);
-
-            case IrcTransport::EVENT_DISCONNECT:
-                return $this->handler
-                    ->processDisconnect($this->connections, $connection);
-
-            case IrcTransport::EVENT_CONNECT_FAIL:
-                return $this->handler
-                    ->processConnectFail($this->connections, $connection);
-
-            case IrcTransport::EVENT_READ:
-                return $this->handler
-                    ->processRead($this->connections, $connection, $connection->transport->readLines());
-
-            case IrcTransport::EVENT_WRITE:
-                $lines = preg_split("#\r?\n#", $data, -1, PREG_SPLIT_NO_EMPTY);
-
-                return $this->handler
-                    ->processWrite($this->connections, $connection, $lines);
+        // Events not in the map are simply not relevant; they can be silently ignored.
+        if (array_key_exists($event, self::$eventMethodMap)) {
+            $method = self::$eventMethodMap[$event];
+            call_user_func(array($this, $method), $connection, $data);
         }
+    }
 
-        return NULL;
+    /**
+     * @param Connection $connection
+     */
+    protected function pushConnectToHandler(Connection $connection) {
+        $this->handler
+            ->processConnect($this->connections, $connection);
+    }
+
+    /**
+     * @param Connection $connection
+     */
+    protected function pushDisconnectToHandler(Connection $connection) {
+        $this->handler
+            ->processDisconnect($this->connections, $connection);
+    }
+
+    /**
+     * @param Connection $connection
+     */
+    protected function pushConnectFailedToHandler(Connection $connection) {
+        $this->handler
+            ->processConnectFail($this->connections, $connection);
+    }
+
+    /**
+     * @param Connection $connection
+     */
+    protected function pushEventReadToHandler(Connection $connection) {
+        $this->handler
+            ->processRead($this->connections, $connection, $connection->transport->readLines());
+    }
+
+    /**
+     * @param Connection $connection
+     * @param string $data
+     */
+    protected function pushEventWriteToHandler(Connection $connection, $data) {
+        $lines = preg_split("#\r?\n#", $data, -1, PREG_SPLIT_NO_EMPTY);
+
+        $this->handler
+            ->processWrite($this->connections, $connection, $lines);
     }
 }
