@@ -82,7 +82,7 @@ class Application {
     /**
      * Creates configuration to be consumed by Phipe. All connections, observers and factories are constructed here.
      *
-     * @return array
+     * @return \SplObjectStorage|array
      */
     protected function createPhipeConfiguration() {
         $connections = $this->createConnectionsFromConfig();
@@ -99,7 +99,7 @@ class Application {
      * Create our internal transport observers. This needs a little more control, as the PrintingHandler should
      * be configurable.
      *
-     * @param \Phircy\Model\Connection[] $connections
+     * @param \SplObjectStorage|\Phircy\Model\Connection[] $connections
      * @return array
      */
     protected function createTransportObservers($connections) {
@@ -157,7 +157,7 @@ class Application {
     /**
      * Adds the supplied listeners to the also supplied dispatcher instance.
      *
-     * @param callable[] $listeners
+     * @param array $listeners
      * @param EventDispatcherInterface $eventDispatcher
      */
     protected function addListenersToEventDispatcher($listeners, EventDispatcherInterface $eventDispatcher) {

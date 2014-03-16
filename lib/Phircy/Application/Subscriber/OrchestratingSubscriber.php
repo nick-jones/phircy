@@ -118,7 +118,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      * @param IrcEvent $event
      */
     public static function onIrcPing(IrcEvent $event) {
-        $server = array_shift($event->getParams());
+        $params = $event->getParams();
+        $server = array_shift($params);
 
         $event->getConnection()
             ->transport
