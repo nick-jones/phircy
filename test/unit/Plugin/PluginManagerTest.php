@@ -74,7 +74,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Phircy\Plugins\PhircyMockPlugin', get_class($plugins[0]));
     }
 
-    public function testLoad_MissingFile()
+    public function testLoadWithMissingFile()
     {
         $this->setExpectedException('\Phircy\Plugin\LoadException', 'Plugin file could not be found');
 
@@ -84,7 +84,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->load();
     }
 
-    public function testLoad_MissingClass()
+    public function testLoadWithMissingClass()
     {
         $this->setExpectedException(
             '\Phircy\Plugin\LoadException',

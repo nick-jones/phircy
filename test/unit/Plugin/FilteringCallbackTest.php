@@ -48,7 +48,7 @@ class FilteringCallbackTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->called);
     }
 
-    public function testInvokeHook_NonMatching()
+    public function testInvokeHookWithNonMatching()
     {
         $text = 'mock';
 

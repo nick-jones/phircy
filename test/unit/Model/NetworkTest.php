@@ -50,7 +50,7 @@ class NetworkTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($channel, $result);
     }
 
-    public function testFindChannelByName_Missing()
+    public function testFindChannelByNameWithMissingChannel()
     {
         $result = $this->network->findChannelByName('foo');
 

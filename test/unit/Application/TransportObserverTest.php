@@ -46,14 +46,14 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer = new TransportObserver($this->connections, $this->handler);
     }
 
-    public function testUpdate_IrrelevantSubject()
+    public function testUpdateWithIrrelevantSubject()
     {
         $subject = $this->getMock('\SplSubject');
 
         $this->observer->update($subject);
     }
 
-    public function testUpdate_Connect()
+    public function testUpdateWithConnect()
     {
         $this->handler->expects($this->once())
             ->method('processConnect')
@@ -62,7 +62,7 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer->update($this->transport, IrcTransport::EVENT_CONNECT);
     }
 
-    public function testUpdate_Disconnect()
+    public function testUpdateWithDisconnect()
     {
         $this->handler->expects($this->once())
             ->method('processDisconnect')
@@ -71,7 +71,7 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer->update($this->transport, IrcTransport::EVENT_DISCONNECT);
     }
 
-    public function testUpdate_ConnectFail()
+    public function testUpdateWithConnectFail()
     {
         $this->handler->expects($this->once())
             ->method('processConnectFail')
@@ -80,7 +80,7 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer->update($this->transport, IrcTransport::EVENT_CONNECT_FAIL);
     }
 
-    public function testUpdate_Read()
+    public function testUpdateWithRead()
     {
         $data = array('mock');
 
@@ -95,7 +95,7 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer->update($this->transport, IrcTransport::EVENT_READ);
     }
 
-    public function testUpdate_Write()
+    public function testUpdateWithWrite()
     {
         $data = array('mock', 'foo');
 
@@ -106,12 +106,12 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase
         $this->observer->update($this->transport, IrcTransport::EVENT_WRITE, implode(PHP_EOL, $data));
     }
 
-    public function testUpdate_EOF()
+    public function testUpdateWithEOF()
     {
         $this->observer->update($this->transport, IrcTransport::EVENT_EOF);
     }
 
-    public function testUpdate_MissingConnection()
+    public function testUpdateWithMissingConnection()
     {
         $this->setExpectedException('UnexpectedValueException', 'No available connection for transport');
 

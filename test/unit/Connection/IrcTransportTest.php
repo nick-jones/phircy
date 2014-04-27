@@ -27,7 +27,7 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase
         $this->transport = new IrcTransport($this->proxied, $this->generator);
     }
 
-    public function testCallHook_Write()
+    public function testCallHookWithWriteMethod()
     {
         $nick = 'Mock';
 
@@ -41,7 +41,7 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase
         $this->transport->__call('writeNick', array($nick));
     }
 
-    public function testCallHook_NonWrite()
+    public function testCallHookWithNonWriteMethod()
     {
         $this->setExpectedException('\BadMethodCallException', 'Undefined method');
 
@@ -65,7 +65,7 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase
         $this->transport->writeCommand('pong', array($server));
     }
 
-    public function testWriteCommand_InvalidCommand()
+    public function testWriteCommandWithInvalidCommand()
     {
         $this->setExpectedException('\InvalidArgumentException', 'Command "foo" does not exist');
 

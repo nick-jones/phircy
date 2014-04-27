@@ -54,7 +54,7 @@ class ConfigModelMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($host, $network->servers[0]->host);
     }
 
-    public function testCreateNetwork_Address()
+    public function testCreateNetworkWithAddress()
     {
         $host = 'irc.mock.example';
         $port = 7000;

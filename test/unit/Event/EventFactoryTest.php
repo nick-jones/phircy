@@ -33,7 +33,7 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $event->getMessage());
     }
 
-    public function testCreateFromParserOutput_Targeted()
+    public function testCreateFromParserOutputWithTargetedEvent()
     {
         $targets = array('Foo');
 
