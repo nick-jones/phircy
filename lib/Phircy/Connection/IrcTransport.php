@@ -122,4 +122,3 @@ class IrcTransport extends BufferingConnection
         return $lines;
     }
 }
-
