@@ -3,6 +3,7 @@
 namespace Phircy\Connection;
 
 use Phergie\Irc\GeneratorInterface;
+use Phipe\Connection\Buffering\BufferingConnection;
 use Phipe\Connection\Connection;
 
 /**
@@ -57,7 +58,8 @@ use Phipe\Connection\Connection;
  * @method void writeIson(string $nicknames)
  * @package Phircy\Connection
  */
-class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
+class IrcTransport extends BufferingConnection
+{
     /**
      * @var \Phergie\Irc\GeneratorInterface
      */
@@ -67,7 +69,8 @@ class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
      * @param Connection $connection
      * @param GeneratorInterface $generator
      */
-    public function __construct(Connection $connection = NULL, GeneratorInterface $generator = NULL) {
+    public function __construct(Connection $connection = null, GeneratorInterface $generator = null)
+    {
         $this->generator = $generator;
 
         parent::__construct($connection);
@@ -80,7 +83,8 @@ class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
      * @param array $arguments
      * @throws \BadMethodCallException
      */
-    public function __call($name, array $arguments) {
+    public function __call($name, array $arguments)
+    {
         if (preg_match('#^write(.+)$#', $name, $matches)) {
             $this->writeCommand($matches[1], $arguments);
             return;
@@ -94,7 +98,8 @@ class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
      * @param array $arguments
      * @throws \InvalidArgumentException
      */
-    public function writeCommand($command, array $arguments) {
+    public function writeCommand($command, array $arguments)
+    {
         $generatorMethod = sprintf('irc%s', ucfirst(strtolower($command)));
 
         if (!method_exists($this->generator, $generatorMethod)) {
@@ -109,7 +114,8 @@ class IrcTransport extends \Phipe\Connection\Buffering\BufferingConnection {
     /**
      * @return array
      */
-    public function readLines() {
+    public function readLines()
+    {
         $data = $this->read();
         $lines = preg_split("#\r?\n#", $data, -1, PREG_SPLIT_NO_EMPTY);
 

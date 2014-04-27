@@ -2,22 +2,26 @@
 
 namespace Phircy\Model;
 
-class NetworkTest extends \PHPUnit_Framework_TestCase {
+class NetworkTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Network
      */
     protected $network;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->network = new Network(array('foo'), 'bar');
     }
 
-    public function testConstructor() {
+    public function testConstructor()
+    {
         $this->assertEquals(array('foo'), $this->network->servers);
         $this->assertEquals('bar', $this->network->name);
     }
 
-    public function testAddChannel() {
+    public function testAddChannel()
+    {
         $channel = new \Phircy\Model\Channel('foo');
 
         $this->network->addChannel($channel);
@@ -26,7 +30,8 @@ class NetworkTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($channel, $this->network->channels['foo']);
     }
 
-    public function testRemoveChannel() {
+    public function testRemoveChannel()
+    {
         $channel = new \Phircy\Model\Channel('foo');
 
         $this->network->addChannel($channel);
@@ -35,7 +40,8 @@ class NetworkTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(0, count($this->network->channels));
     }
 
-    public function testFindChannelByName() {
+    public function testFindChannelByName()
+    {
         $channel = new \Phircy\Model\Channel('foo');
 
         $this->network->addChannel($channel);
@@ -44,13 +50,15 @@ class NetworkTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($channel, $result);
     }
 
-    public function testFindChannelByName_Missing() {
+    public function testFindChannelByName_Missing()
+    {
         $result = $this->network->findChannelByName('foo');
 
         $this->assertNull($result);
     }
 
-    public function testNextServer() {
+    public function testNextServer()
+    {
         $server1 = $this->getMock('\Phircy\Model\Server', array(), array('127.0.0.1'));
         $server2 = $this->getMock('\Phircy\Model\Server', array(), array('127.0.0.2'));
 

@@ -7,7 +7,8 @@ namespace Phircy\Event;
  *
  * @package Phircy\Event
  */
-class Priorities {
+class Priorities
+{
     /**
      * All Phircy application listeners that must run before *all* other listeners should use this priority level.
      */

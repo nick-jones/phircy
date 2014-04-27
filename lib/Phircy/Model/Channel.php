@@ -5,7 +5,8 @@ namespace Phircy\Model;
 /**
  * @package Phircy\Model
  */
-class Channel {
+class Channel
+{
     /**
      * @var string
      */
@@ -25,7 +26,8 @@ class Channel {
      * @param string $name
      * @param array $modes
      */
-    public function __construct($name, array $modes = array()) {
+    public function __construct($name, array $modes = array())
+    {
         $this->name = $name;
         $this->modes = $modes;
     }

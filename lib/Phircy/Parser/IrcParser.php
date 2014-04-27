@@ -7,7 +7,8 @@ namespace Phircy\Parser;
  *
  * @package Phircy\Parser
  */
-interface IrcParser {
+interface IrcParser
+{
     /**
      * Parse an IRC string into an array. The array should contain the following keys (as supplied by Phergie):
      *

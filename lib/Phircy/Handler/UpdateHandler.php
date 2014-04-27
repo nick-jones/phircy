@@ -9,7 +9,8 @@ use Phircy\Model\Connection;
  *
  * @package Phircy\Handler
  */
-interface UpdateHandler {
+interface UpdateHandler
+{
     /**
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection

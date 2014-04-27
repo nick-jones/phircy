@@ -2,6 +2,7 @@
 
 namespace Phircy;
 
+use Phipe\Application as Phipe;
 use Phircy\Application\ConfigModelMapper;
 use Phircy\Application\TransportObserver;
 use Phircy\Connection\IrcFactory;
@@ -21,7 +22,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  *
  * @package Phircy
  */
-class Application {
+class Application
+{
     /**
      * @var array
      */
@@ -38,7 +40,7 @@ class Application {
     protected $eventDispatcher;
 
     /**
-     * @var \Phipe\Application
+     * @var Phipe
      */
     protected $phipe;
 
@@ -49,19 +51,21 @@ class Application {
 
     /**
      * @param array|ApplicationConfig|null $config $config
-     * @param \Phipe\Application $phipe
+     * @param Phipe $phipe
      * @param ConfigModelMapper $mapper
      */
-    public function __construct($config = NULL, \Phipe\Application $phipe = NULL, ConfigModelMapper $mapper = NULL) {
+    public function __construct($config = null, Phipe $phipe = null, ConfigModelMapper $mapper = null)
+    {
         $this->setConfig($config);
-        $this->setPhipe($phipe ?: new \Phipe\Application());
-        $this->setConfigModelMapper($mapper ?: new ConfigModelMapper());
+        $this->setPhipe($phipe ? : new Phipe());
+        $this->setConfigModelMapper($mapper ? : new ConfigModelMapper());
     }
 
     /**
      * Main application run method.
      */
-    public function execute() {
+    public function execute()
+    {
         $this->pluginManager = $this->getPluginManager();
         $this->pluginManager->load();
 
@@ -84,7 +88,8 @@ class Application {
      *
      * @return \SplObjectStorage|array
      */
-    protected function createPhipeConfiguration() {
+    protected function createPhipeConfiguration()
+    {
         $connections = $this->createConnectionsFromConfig();
         $factory = $this->getIrcConnectionFactory();
 
@@ -102,7 +107,8 @@ class Application {
      * @param \SplObjectStorage|\Phircy\Model\Connection[] $connections
      * @return array
      */
-    protected function createTransportObservers($connections) {
+    protected function createTransportObservers($connections)
+    {
         return array(
             new TransportObserver($connections, $this->createPrintingUpdateHandler()),
             new TransportObserver($connections, $this->createDispatchingUpdateHandler())
@@ -112,14 +118,16 @@ class Application {
     /**
      * @return PrintingUpdateHandler
      */
-    protected function createPrintingUpdateHandler() {
+    protected function createPrintingUpdateHandler()
+    {
         return new PrintingUpdateHandler(fopen('php://output', 'w'));
     }
 
     /**
      * @return DispatchingUpdateHandler
      */
-    protected function createDispatchingUpdateHandler() {
+    protected function createDispatchingUpdateHandler()
+    {
         $parser = $this->getIrcParser();
         $eventFactory = new EventFactory();
 
@@ -132,7 +140,8 @@ class Application {
      *
      * @param EventDispatcherInterface $eventDispatcher
      */
-    protected function prepareEventDispatcher(EventDispatcherInterface $eventDispatcher) {
+    protected function prepareEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    {
         $this->addSubscribersToEventDispatcher($this->config['core.subscribers'], $eventDispatcher);
         $this->addSubscribersToEventDispatcher($this->config['subscribers'], $eventDispatcher);
         $this->addListenersToEventDispatcher($this->config['listeners'], $eventDispatcher);
@@ -148,7 +157,8 @@ class Application {
      * @param EventSubscriberInterface[] $subscribers
      * @param EventDispatcherInterface $eventDispatcher
      */
-    protected function addSubscribersToEventDispatcher($subscribers, EventDispatcherInterface $eventDispatcher) {
+    protected function addSubscribersToEventDispatcher($subscribers, EventDispatcherInterface $eventDispatcher)
+    {
         foreach ($subscribers as $subscriber) {
             $eventDispatcher->addSubscriber($subscriber);
         }
@@ -160,7 +170,8 @@ class Application {
      * @param array $listeners
      * @param EventDispatcherInterface $eventDispatcher
      */
-    protected function addListenersToEventDispatcher($listeners, EventDispatcherInterface $eventDispatcher) {
+    protected function addListenersToEventDispatcher($listeners, EventDispatcherInterface $eventDispatcher)
+    {
         foreach ($listeners as $eventName => $callbacks) {
             foreach ($callbacks as $callback) {
                 $eventDispatcher->addListener($eventName, $callback);
@@ -174,7 +185,8 @@ class Application {
      *
      * @return \Phircy\Model\Connection[]
      */
-    protected function createConnectionsFromConfig() {
+    protected function createConnectionsFromConfig()
+    {
         $networksConfig = $this->config['networks'];
 
         return $this->getConfigModelMapper()
@@ -189,7 +201,8 @@ class Application {
      * @param \Phircy\Model\Connection[] $connections
      * @return IrcTransport[]
      */
-    protected function createTransportsFromConnections(IrcFactory $transportFactory, $connections) {
+    protected function createTransportsFromConnections(IrcFactory $transportFactory, $connections)
+    {
         $transports = array();
 
         foreach ($connections as $connection) {
@@ -208,7 +221,8 @@ class Application {
      * @param Network $network
      * @return IrcTransport
      */
-    protected function createTransportFromNetwork(IrcFactory $transportFactory, Network $network) {
+    protected function createTransportFromNetwork(IrcFactory $transportFactory, Network $network)
+    {
         $server = $network->nextServer();
 
         return $transportFactory
@@ -216,37 +230,42 @@ class Application {
     }
 
     /**
-     * @return \Phipe\Application
+     * @return Phipe
      */
-    protected function getPhipe() {
+    protected function getPhipe()
+    {
         return $this->phipe;
     }
 
     /**
-     * @param \Phipe\Application $phipe
+     * @param Phipe $phipe
      */
-    public function setPhipe(\Phipe\Application $phipe) {
+    public function setPhipe(Phipe $phipe)
+    {
         $this->phipe = $phipe;
     }
 
     /**
      * @return ConfigModelMapper
      */
-    protected function getConfigModelMapper() {
+    protected function getConfigModelMapper()
+    {
         return $this->configModelMapper;
     }
 
     /**
      * @param ConfigModelMapper $configModelMapper
      */
-    public function setConfigModelMapper(ConfigModelMapper $configModelMapper) {
+    public function setConfigModelMapper(ConfigModelMapper $configModelMapper)
+    {
         $this->configModelMapper = $configModelMapper;
     }
 
     /**
      * @param array|ApplicationConfig|null $config
      */
-    public function setConfig($config) {
+    public function setConfig($config)
+    {
         if (is_array($config)) {
             $config = new ApplicationConfig($config);
         }
@@ -257,28 +276,32 @@ class Application {
     /**
      * @return IrcParser
      */
-    protected function getIrcParser() {
+    protected function getIrcParser()
+    {
         return $this->config['irc.parser'];
     }
 
     /**
      * @return EventDispatcherInterface
      */
-    protected function getEventDispatcher() {
+    protected function getEventDispatcher()
+    {
         return $this->config['core.event_dispatcher'];
     }
 
     /**
      * @return IrcFactory
      */
-    protected function getIrcConnectionFactory() {
+    protected function getIrcConnectionFactory()
+    {
         return $this->config['irc.connection_factory'];
     }
 
     /**
      * @return PluginManager
      */
-    protected function getPluginManager() {
+    protected function getPluginManager()
+    {
         return $this->config['core.plugin_manager'];
     }
 }

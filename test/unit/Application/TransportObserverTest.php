@@ -4,7 +4,8 @@ namespace Phircy\Application;
 
 use Phircy\Connection\IrcTransport;
 
-class TransportObserverTest extends \PHPUnit_Framework_TestCase {
+class TransportObserverTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var TransportObserver
      */
@@ -30,7 +31,8 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
      */
     protected $handler;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->transport = $this->getMock('\Phircy\Connection\IrcTransport');
 
         $this->connection = new \Phircy\Model\Connection();
@@ -44,13 +46,15 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer = new TransportObserver($this->connections, $this->handler);
     }
 
-    public function testUpdate_IrrelevantSubject() {
+    public function testUpdate_IrrelevantSubject()
+    {
         $subject = $this->getMock('\SplSubject');
 
         $this->observer->update($subject);
     }
 
-    public function testUpdate_Connect() {
+    public function testUpdate_Connect()
+    {
         $this->handler->expects($this->once())
             ->method('processConnect')
             ->with($this->equalTo($this->connections), $this->equalTo($this->connection));
@@ -58,7 +62,8 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_CONNECT);
     }
 
-    public function testUpdate_Disconnect() {
+    public function testUpdate_Disconnect()
+    {
         $this->handler->expects($this->once())
             ->method('processDisconnect')
             ->with($this->equalTo($this->connections), $this->equalTo($this->connection));
@@ -66,7 +71,8 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_DISCONNECT);
     }
 
-    public function testUpdate_ConnectFail() {
+    public function testUpdate_ConnectFail()
+    {
         $this->handler->expects($this->once())
             ->method('processConnectFail')
             ->with($this->equalTo($this->connections), $this->equalTo($this->connection));
@@ -74,7 +80,8 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_CONNECT_FAIL);
     }
 
-    public function testUpdate_Read() {
+    public function testUpdate_Read()
+    {
         $data = array('mock');
 
         $this->transport->expects($this->once())
@@ -88,7 +95,8 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_READ);
     }
 
-    public function testUpdate_Write() {
+    public function testUpdate_Write()
+    {
         $data = array('mock', 'foo');
 
         $this->handler->expects($this->once())
@@ -98,11 +106,13 @@ class TransportObserverTest extends \PHPUnit_Framework_TestCase {
         $this->observer->update($this->transport, IrcTransport::EVENT_WRITE, implode(PHP_EOL, $data));
     }
 
-    public function testUpdate_EOF() {
+    public function testUpdate_EOF()
+    {
         $this->observer->update($this->transport, IrcTransport::EVENT_EOF);
     }
 
-    public function testUpdate_MissingConnection() {
+    public function testUpdate_MissingConnection()
+    {
         $this->setExpectedException('UnexpectedValueException', 'No available connection for transport');
 
         $this->connections->detach($this->connection);

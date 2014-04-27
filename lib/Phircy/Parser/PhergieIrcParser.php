@@ -9,7 +9,8 @@ use Phergie\Irc\Parser;
  *
  * @package Phircy\Parser
  */
-class PhergieIrcParser implements IrcParser {
+class PhergieIrcParser implements IrcParser
+{
     /**
      * @var Parser
      */
@@ -19,7 +20,8 @@ class PhergieIrcParser implements IrcParser {
      * @param $line
      * @return array|null
      */
-    public function parse($line) {
+    public function parse($line)
+    {
         return $this->getPhergieParser()
             ->parse($line . "\r\n");
     }
@@ -27,7 +29,8 @@ class PhergieIrcParser implements IrcParser {
     /**
      * @return Parser
      */
-    public function getPhergieParser() {
+    public function getPhergieParser()
+    {
         if (!$this->phergieParser) {
             $this->phergieParser = new Parser();
         }
@@ -38,7 +41,8 @@ class PhergieIrcParser implements IrcParser {
     /**
      * @param Parser $parser
      */
-    public function setPhergieParser(Parser $parser) {
+    public function setPhergieParser(Parser $parser)
+    {
         $this->phergieParser = $parser;
     }
 }

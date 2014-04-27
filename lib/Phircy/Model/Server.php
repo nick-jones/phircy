@@ -5,7 +5,8 @@ namespace Phircy\Model;
 /**
  * @package Phircy\Model
  */
-class Server {
+class Server
+{
     /**
      * @var string
      */
@@ -31,7 +32,8 @@ class Server {
      * @param int $port
      * @param bool $ssl
      */
-    public function __construct($host, $port = 6667, $ssl = FALSE) {
+    public function __construct($host, $port = 6667, $ssl = false)
+    {
         $this->host = $host;
         $this->port = $port;
         $this->ssl = $ssl;

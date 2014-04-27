@@ -5,7 +5,8 @@ namespace Phircy\Plugin;
 /**
  * @package Phircy\Plugin
  */
-class FilteringCallbackTest extends \PHPUnit_Framework_TestCase {
+class FilteringCallbackTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var FilteringCallback
      */
@@ -21,22 +22,24 @@ class FilteringCallbackTest extends \PHPUnit_Framework_TestCase {
      */
     protected $called;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->called = 0;
         $this->matcher = $this->getMock('\Phircy\Matcher\Matcher');
 
-        $this->filteringCallback = new FilteringCallback($this->matcher, function() {
+        $this->filteringCallback = new FilteringCallback($this->matcher, function () {
             $this->called++;
         });
     }
 
-    public function testInvokeHook() {
+    public function testInvokeHook()
+    {
         $text = 'mock';
 
         $this->matcher->expects($this->once())
             ->method('matches')
             ->with($text)
-            ->will($this->returnValue(TRUE));
+            ->will($this->returnValue(true));
 
         $event = $this->createMockIrcEvent(array('text' => $text));
 
@@ -45,13 +48,14 @@ class FilteringCallbackTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $this->called);
     }
 
-    public function testInvokeHook_NonMatching() {
+    public function testInvokeHook_NonMatching()
+    {
         $text = 'mock';
 
         $this->matcher->expects($this->once())
             ->method('matches')
             ->with($text)
-            ->will($this->returnValue(FALSE));
+            ->will($this->returnValue(false));
 
         $event = $this->createMockIrcEvent(array('text' => $text));
 
@@ -64,7 +68,8 @@ class FilteringCallbackTest extends \PHPUnit_Framework_TestCase {
      * @param array $params
      * @return \PHPUnit_Framework_MockObject_MockObject|\Phircy\Event\IrcEvent
      */
-    protected function createMockIrcEvent(array $params = array()) {
+    protected function createMockIrcEvent(array $params = array())
+    {
         $event = $this->getMock('\Phircy\Event\IrcEvent');
 
         $event->expects($this->any())

@@ -11,7 +11,8 @@ namespace Phircy\Matcher;
  *
  * @package Phircy\Matcher
  */
-class CommandMatcher implements Matcher {
+class CommandMatcher implements Matcher
+{
     /**
      * @var string
      */
@@ -20,7 +21,8 @@ class CommandMatcher implements Matcher {
     /**
      * @param string $command
      */
-    public function __construct($command) {
+    public function __construct($command)
+    {
         $this->command = $command;
     }
 
@@ -28,8 +30,9 @@ class CommandMatcher implements Matcher {
      * @param string $message
      * @return bool
      */
-    public function matches($message) {
+    public function matches($message)
+    {
         return $message === $this->command
-            || strpos($message, $this->command . ' ') !== FALSE;
+            || strpos($message, $this->command . ' ') !== false;
     }
 }

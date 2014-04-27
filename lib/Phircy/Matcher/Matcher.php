@@ -7,7 +7,8 @@ namespace Phircy\Matcher;
  *
  * @package Phircy\Matcher
  */
-interface Matcher {
+interface Matcher
+{
     /**
      * Indicates whether the supplied message matches the implementations expectations.
      *

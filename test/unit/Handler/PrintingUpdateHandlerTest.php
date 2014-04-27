@@ -2,7 +2,8 @@
 
 namespace Phircy\Handler;
 
-class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
+class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var PrintingUpdateHandler
      */
@@ -15,23 +16,27 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
 
     const PREFIX_REGEX = '\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] \(Mock\)';
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->handle = fopen('php://memory', 'rw');
         $this->handler = new PrintingUpdateHandler($this->handle);
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         fclose($this->handle);
     }
 
     /**
      * @return string
      */
-    protected function getHandleContents() {
+    protected function getHandleContents()
+    {
         return stream_get_contents($this->handle, -1, 0);
     }
 
-    public function testProcessConnect() {
+    public function testProcessConnect()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();
 
@@ -41,7 +46,8 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->assertRegExp(sprintf('/%s Connected!/', self::PREFIX_REGEX), $output);
     }
 
-    public function testProcessDisconnect() {
+    public function testProcessDisconnect()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();
 
@@ -51,7 +57,8 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->assertRegExp(sprintf('/%s Disconnected!/', self::PREFIX_REGEX), $output);
     }
 
-    public function testProcessConnectFail() {
+    public function testProcessConnectFail()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();
 
@@ -61,7 +68,8 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->assertRegExp(sprintf('/%s Connect failed!/', self::PREFIX_REGEX), $output);
     }
 
-    public function testProcessRead() {
+    public function testProcessRead()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();
         $message = 'NICK :Mock';
@@ -72,7 +80,8 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->assertRegExp(sprintf('/%s ← %s/', self::PREFIX_REGEX, $message), $output);
     }
 
-    public function testProcessWrite() {
+    public function testProcessWrite()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->createMockConnection();
         $message = 'PART :#Mock';
@@ -86,7 +95,8 @@ class PrintingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
     /**
      * @return \Phircy\Model\Connection
      */
-    protected function createMockConnection() {
+    protected function createMockConnection()
+    {
         $connection = new \Phircy\Model\Connection();
         $connection->network = new \Phircy\Model\Network();
         $connection->network->name = 'Mock';

@@ -2,17 +2,20 @@
 
 namespace Phircy\Parser;
 
-class PhergieIrcParserTest extends \PHPUnit_Framework_TestCase {
+class PhergieIrcParserTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var PhergieIrcParser
      */
     protected $parser;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->parser = new PhergieIrcParser();
     }
 
-    public function testParse() {
+    public function testParse()
+    {
         $line = 'NICK :Mock';
         $output = array('command' => 'NICK', 'params' => array('Mock'));
 
@@ -29,7 +32,8 @@ class PhergieIrcParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($output, $result);
     }
 
-    public function testGetPhergieParser() {
+    public function testGetPhergieParser()
+    {
         $this->assertInstanceOf('\Phergie\Irc\Parser', $this->parser->getPhergieParser());
     }
 }

@@ -7,7 +7,8 @@ namespace Phircy\Plugin;
  *
  * @package Phircy\Plugin
  */
-class PluginManager {
+class PluginManager
+{
     /**
      * @var string[]|Plugin[]
      */
@@ -22,7 +23,8 @@ class PluginManager {
      * @param string[]|Plugin[] $plugins
      * @param string $pluginsPath
      */
-    public function __construct($plugins, $pluginsPath) {
+    public function __construct($plugins, $pluginsPath)
+    {
         $this->plugins = $plugins;
         $this->pluginsPath = $pluginsPath;
     }
@@ -30,7 +32,8 @@ class PluginManager {
     /**
      * Loads all unloaded plugins.
      */
-    public function load() {
+    public function load()
+    {
         foreach ($this->plugins as $i => $plugin) {
             // Plugins can be pre-loaded, if wanted. Also, it shouldn't be a problem calling load() multiple
             // times, particularly if we wish to allow plugins to be added after initial load.
@@ -45,7 +48,8 @@ class PluginManager {
     /**
      * @return Plugin[]
      */
-    public function getPlugins() {
+    public function getPlugins()
+    {
         return $this->plugins;
     }
 
@@ -56,7 +60,8 @@ class PluginManager {
      * @return Plugin
      * @throws LoadException Triggered when the plugin cannot be located
      */
-    protected function loadPlugin($pluginName) {
+    protected function loadPlugin($pluginName)
+    {
         $this->includePluginFile($pluginName);
 
         $class = sprintf('\Phircy\Plugins\%s', $pluginName);
@@ -75,7 +80,8 @@ class PluginManager {
      * @param string $pluginName
      * @throws LoadException
      */
-    protected function includePluginFile($pluginName) {
+    protected function includePluginFile($pluginName)
+    {
         $path = $this->pluginsPath . DIRECTORY_SEPARATOR . sprintf('%s.php', $pluginName);
 
         if (!is_readable($path)) {

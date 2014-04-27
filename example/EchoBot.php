@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $listeners = [
     'irc.privmsg' => [
-        function(\Phircy\Event\TargetedIrcEvent $event) {
+        function (\Phircy\Event\TargetedIrcEvent $event) {
             $params = $event->getParams();
 
             if (!preg_match('/^say (.+)/', $params['text'], $matches)) {

@@ -7,7 +7,8 @@ namespace Phircy\Plugin;
  *
  * @package Phircy\Plugin
  */
-class LoadException extends \RuntimeException {
+class LoadException extends \RuntimeException
+{
     /**
      * @var string
      */
@@ -17,7 +18,8 @@ class LoadException extends \RuntimeException {
      * @param string $message
      * @param string $pluginName
      */
-    public function __construct($message, $pluginName) {
+    public function __construct($message, $pluginName)
+    {
         $this->pluginName = $pluginName;
 
         parent::__construct($message);
@@ -26,7 +28,8 @@ class LoadException extends \RuntimeException {
     /**
      * @return string
      */
-    public function getPluginName() {
+    public function getPluginName()
+    {
         return $this->pluginName;
     }
 }

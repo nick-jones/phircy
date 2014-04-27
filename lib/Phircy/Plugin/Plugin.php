@@ -13,7 +13,8 @@ use Phircy\Matcher\RegexMatcher;
  *
  * @package Phircy\Plugin
  */
-abstract class Plugin {
+abstract class Plugin
+{
     /**
      * Prefix for command related matching.
      *
@@ -33,7 +34,8 @@ abstract class Plugin {
      * @param string $command
      * @param callable $callback
      */
-    protected function match($command, callable $callback) {
+    protected function match($command, callable $callback)
+    {
         $matcher = new CommandMatcher($this->prefix . $command);
         $this->listen('irc.privmsg', new FilteringCallback($matcher, $callback));
     }
@@ -49,7 +51,8 @@ abstract class Plugin {
      * @param string $pattern Glob-style wildcard pattern
      * @param callable $callback Callback to be invoked on successful match
      */
-    protected function matchPattern($pattern, callable $callback) {
+    protected function matchPattern($pattern, callable $callback)
+    {
         $matcher = new PatternMatcher($pattern);
         $this->listen('irc.privmsg', new FilteringCallback($matcher, $callback));
     }
@@ -61,7 +64,8 @@ abstract class Plugin {
      * @param string $pattern
      * @param callable $callback
      */
-    protected function matchRegex($pattern, callable $callback) {
+    protected function matchRegex($pattern, callable $callback)
+    {
         $matcher = new RegexMatcher($pattern);
         $this->listen('irc.privmsg', new FilteringCallback($matcher, $callback));
     }
@@ -73,7 +77,8 @@ abstract class Plugin {
      * @param $eventName
      * @param callable|FilteringCallback $callback
      */
-    protected function listen($eventName, callable $callback) {
+    protected function listen($eventName, callable $callback)
+    {
         if (!isset($this->listeners[$eventName])) {
             $this->listeners[$eventName] = array();
         }
@@ -84,7 +89,8 @@ abstract class Plugin {
     /**
      * @return array
      */
-    public function getListeners() {
+    public function getListeners()
+    {
         return $this->listeners;
     }
 }

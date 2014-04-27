@@ -2,17 +2,20 @@
 
 namespace Phircy\Event;
 
-class EventFactoryTest extends \PHPUnit_Framework_TestCase {
+class EventFactoryTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var EventFactory
      */
     protected $factory;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->factory = new EventFactory();
     }
 
-    public function testCreateFromParserOutput() {
+    public function testCreateFromParserOutput()
+    {
         $command = 'NICK';
         $params = array('Mock');
         $message = 'mock';
@@ -30,7 +33,8 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($message, $event->getMessage());
     }
 
-    public function testCreateFromParserOutput_Targeted() {
+    public function testCreateFromParserOutput_Targeted()
+    {
         $targets = array('Foo');
 
         $output = array(

@@ -10,11 +10,13 @@ use Globby\Pattern;
  *
  * @package Phircy\Matcher
  */
-class PatternMatcher extends RegexMatcher {
+class PatternMatcher extends RegexMatcher
+{
     /**
      * @param string $pattern
      */
-    public function __construct($pattern) {
+    public function __construct($pattern)
+    {
         $pattern = new Pattern($pattern);
 
         parent::__construct($pattern->toRegex());

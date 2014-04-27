@@ -5,17 +5,20 @@ namespace Phircy;
 /**
  * @package Phipe
  */
-class ApplicationTest extends \PHPUnit_Framework_TestCase {
+class ApplicationTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Application
      */
     protected $application;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->application = new Application();
     }
 
-    public function testExecute() {
+    public function testExecute()
+    {
         $host = 'irc.mock.example';
 
         $networks = array(
@@ -46,7 +49,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
         $subscriber = $this->getMock('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
         $coreSubscriber = $this->getMock('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
-        $listener = function() {};
+        $listener = function () {
+        };
 
         $plugin = $this->getMock('\Phircy\Plugin\Plugin');
 
@@ -66,25 +70,31 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
         $eventDispatcher->expects($this->exactly(2))
             ->method('addListener');
 
-        $ircFactory = $this->getMock('\Phircy\Connection\IrcFactory', array(), array(
-            $this->getMock('\Phipe\Connection\Factory'),
-            $this->getMock('\Phergie\Irc\GeneratorInterface')
-        ));
+        $ircFactory = $this->getMock(
+            '\Phircy\Connection\IrcFactory',
+            array(),
+            array(
+                $this->getMock('\Phipe\Connection\Factory'),
+                $this->getMock('\Phergie\Irc\GeneratorInterface')
+            )
+        );
 
         $ircFactory->expects($this->once())
             ->method('createConnection')
             ->with($this->equalTo($host), $this->equalTo(6667), $this->equalTo(false))
             ->will($this->returnValue($this->getMock('\Phircy\Connection\IrcTransport')));
 
-        $this->application->setConfig(array(
-            'subscribers' => array($subscriber),
-            'core.subscribers' => array($coreSubscriber),
-            'listeners' => array('irc.privmsg' => array($listener)),
-            'plugins' => array($plugin),
-            'core.event_dispatcher' => $eventDispatcher,
-            'networks' => $networks,
-            'irc.connection_factory' => $ircFactory
-        ));
+        $this->application->setConfig(
+            array(
+                'subscribers' => array($subscriber),
+                'core.subscribers' => array($coreSubscriber),
+                'listeners' => array('irc.privmsg' => array($listener)),
+                'plugins' => array($plugin),
+                'core.event_dispatcher' => $eventDispatcher,
+                'networks' => $networks,
+                'irc.connection_factory' => $ircFactory
+            )
+        );
 
         $this->application->setPhipe($phipe);
         $this->application->setConfigModelMapper($configModelMapper);
@@ -96,7 +106,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
      * @param string $host
      * @return Model\Connection
      */
-    protected function createConnection($host) {
+    protected function createConnection($host)
+    {
         $connection = new \Phircy\Model\Connection();
         $network = new \Phircy\Model\Network();
         $network->servers[] = new \Phircy\Model\Server($host);

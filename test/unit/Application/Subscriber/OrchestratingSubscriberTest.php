@@ -4,7 +4,8 @@ namespace Phircy\Application\Subscriber;
 
 require_once __DIR__ . '/SubscriberTestCase.php';
 
-class OrchestratingSubscriberTest extends SubscriberTestCase {
+class OrchestratingSubscriberTest extends SubscriberTestCase
+{
     /**
      * @var OrchestratingSubscriber
      */
@@ -25,15 +26,18 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         )
     );
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->subscriber = new OrchestratingSubscriber($this->config);
     }
 
-    public function testGetSubscribedEvents() {
+    public function testGetSubscribedEvents()
+    {
         $this->assertInternalType('array', $this->subscriber->getSubscribedEvents());
     }
 
-    public function testOnSocketConnect() {
+    public function testOnSocketConnect()
+    {
         $transport = $this->getMock('\Phircy\Connection\IrcTransport', array('writeNick', 'writeUser'));
 
         $transport->expects($this->once())
@@ -58,7 +62,8 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $this->subscriber->onSocketConnect($event);
     }
 
-    public function testOnSocketDisconnect() {
+    public function testOnSocketDisconnect()
+    {
         $event = $this->createMockEvent();
 
         $dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
@@ -67,13 +72,14 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
             ->method('dispatch')
             ->with($this->equalTo('irc.disconnect'), $this->equalTo($event));
 
-        $this->subscriber->onSocketDisconnect($event, NULL, $dispatcher);
+        $this->subscriber->onSocketDisconnect($event, null, $dispatcher);
     }
 
-    public function testOnSocketConnectFail() {
+    public function testOnSocketConnectFail()
+    {
         $host = 'irc.mock.example';
         $port = 7000;
-        $ssl = TRUE;
+        $ssl = true;
 
         $transport = $this->getMock('\Phircy\Connection\IrcTransport');
 
@@ -104,7 +110,8 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $this->subscriber->onSocketConnectFail($event);
     }
 
-    public function testOnIrc001() {
+    public function testOnIrc001()
+    {
         $event = $this->createMockEvent();
 
         $dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
@@ -113,10 +120,11 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
             ->method('dispatch')
             ->with($this->equalTo('irc.connect'), $this->equalTo($event));
 
-        $this->subscriber->onIrc001($event, NULL, $dispatcher);
+        $this->subscriber->onIrc001($event, null, $dispatcher);
     }
 
-    public function testOnIrcConnect() {
+    public function testOnIrcConnect()
+    {
         $server = 'irc.mock.example';
 
         $transport = $this->getMock('\Phircy\Connection\IrcTransport', array('writeJoin'));
@@ -134,7 +142,8 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $this->subscriber->onIrcConnect($event);
     }
 
-    public function testOnIrcPing() {
+    public function testOnIrcPing()
+    {
         $server = 'irc.mock.example';
 
         $transport = $this->getMock('\Phircy\Connection\IrcTransport', array('writePong'));
@@ -151,7 +160,8 @@ class OrchestratingSubscriberTest extends SubscriberTestCase {
         $this->subscriber->onIrcPing($event);
     }
 
-    public function testOnIrc433() {
+    public function testOnIrc433()
+    {
         $altnick = 'mock_altnick';
 
         $transport = $this->getMock('\Phircy\Connection\IrcTransport', array('writeNick'));

@@ -12,7 +12,8 @@ use Phircy\Matcher\Matcher;
  *
  * @package Phircy\Plugin
  */
-class FilteringCallback {
+class FilteringCallback
+{
     /**
      * @var Matcher
      */
@@ -27,7 +28,8 @@ class FilteringCallback {
      * @param Matcher $matcher
      * @param callable $callback
      */
-    public function __construct(Matcher $matcher, callable $callback) {
+    public function __construct(Matcher $matcher, callable $callback)
+    {
         $this->matcher = $matcher;
         $this->callback = $callback;
     }
@@ -38,7 +40,8 @@ class FilteringCallback {
      *
      * @param IrcEvent $event
      */
-    public function __invoke(IrcEvent $event) {
+    public function __invoke(IrcEvent $event)
+    {
         $params = $event->getParams();
         $message = $params['text'];
 

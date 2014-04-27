@@ -7,7 +7,8 @@ namespace Phircy\Event;
  *
  * @package Phircy\Event
  */
-class EventFactory {
+class EventFactory
+{
     /**
      * Construct an Event instance based on parser output. This is based on Phergie\Irc\Event\ParserConverter, but is
      * tailored to use the Phircy flavour of Event classes.
@@ -15,12 +16,12 @@ class EventFactory {
      * @param array $parserOutput
      * @return IrcEvent|TargetedIrcEvent
      */
-    public function createFromParserOutput(array $parserOutput) {
+    public function createFromParserOutput(array $parserOutput)
+    {
         if (isset($parserOutput['targets'])) {
             $event = new TargetedIrcEvent();
             $event->setTargets($parserOutput['targets']);
-        }
-        else {
+        } else {
             $event = new IrcEvent();
         }
 

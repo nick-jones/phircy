@@ -13,20 +13,22 @@ use Phircy\Model\Server;
  *
  * @package Phircy\Application
  */
-class ConfigModelMapper {
+class ConfigModelMapper
+{
     /**
      * Create a collection of Connections based on the supplied configuration data.
      *
      * @param array $config
      * @return \SplObjectStorage|Connection[]
      */
-    public function createConnections(array $config) {
+    public function createConnections(array $config)
+    {
         $connections = new \SplObjectStorage();
 
         foreach ($config as $id => $details) {
             $connection = new Connection();
             $connection->id = $id;
-            $connection->network = $this->createNetwork($details['name'], (array) $details['servers']);
+            $connection->network = $this->createNetwork($details['name'], (array)$details['servers']);
 
             $connections->attach($connection);
         }
@@ -41,7 +43,8 @@ class ConfigModelMapper {
      * @param array $config
      * @return Network
      */
-    public function createNetwork($name, array $config) {
+    public function createNetwork($name, array $config)
+    {
         $servers = $config ? $this->createServers($config) : array();
 
         return new Network($servers, $name);
@@ -53,7 +56,8 @@ class ConfigModelMapper {
      * @param array $config
      * @return array
      */
-    public function createServers(array $config) {
+    public function createServers(array $config)
+    {
         $servers = array();
 
         foreach ($config as $details) {
@@ -73,10 +77,11 @@ class ConfigModelMapper {
      * @param array $config
      * @return Server
      */
-    public function createServer(array $config) {
-        $host = isset($config['host']) ? $config['host'] : NULL;
+    public function createServer(array $config)
+    {
+        $host = isset($config['host']) ? $config['host'] : null;
         $port = isset($config['port']) ? $config['port'] : 6667;
-        $ssl = isset($config['ssl']) ? $config['ssl'] : FALSE;
+        $ssl = isset($config['ssl']) ? $config['ssl'] : false;
 
         return new Server($host, $port, $ssl);
     }
@@ -88,12 +93,13 @@ class ConfigModelMapper {
      * @param string $address The host address, e.g. (irc.dal.net:+7000)
      * @return array Address details. Keys are: "host", "port", "ssl".
      */
-    protected function parseAddress($address) {
+    protected function parseAddress($address)
+    {
         preg_match('#^(?:irc://)?(.*?)(?::(\+?)([0-9]+))?$#', $address, $matches);
 
         return array(
             'host' => $matches[1],
-            'port' => isset($matches[3]) ? $matches[3] : NULL,
+            'port' => isset($matches[3]) ? $matches[3] : null,
             'ssl' => isset($matches[2]) && $matches[2] === '+'
         );
     }

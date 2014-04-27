@@ -5,7 +5,8 @@ namespace Phircy\Model;
 /**
  * @package Phircy\Model
  */
-class Network {
+class Network
+{
     /**
      * @var string
      */
@@ -29,7 +30,7 @@ class Network {
     /**
      * @var bool
      */
-    public $connected = FALSE;
+    public $connected = false;
 
     /**
      * @var int
@@ -40,7 +41,8 @@ class Network {
      * @param Server[] $servers
      * @param string $name
      */
-    public function __construct(array $servers = array(), $name = NULL) {
+    public function __construct(array $servers = array(), $name = null)
+    {
         $this->name = $name;
         $this->servers = $servers;
     }
@@ -48,14 +50,16 @@ class Network {
     /**
      * @param Channel $channel
      */
-    public function addChannel(Channel $channel) {
+    public function addChannel(Channel $channel)
+    {
         $this->channels[$channel->name] = $channel;
     }
 
     /**
      * @param Channel $channel
      */
-    public function removeChannel(Channel $channel) {
+    public function removeChannel(Channel $channel)
+    {
         unset($this->channels[$channel->name]);
     }
 
@@ -63,16 +67,18 @@ class Network {
      * @param string $name
      * @return Channel
      */
-    public function findChannelByName($name) {
+    public function findChannelByName($name)
+    {
         return array_key_exists($name, $this->channels)
             ? $this->channels[$name]
-            : NULL;
+            : null;
     }
 
     /**
      * @return Server
      */
-    public function nextServer() {
+    public function nextServer()
+    {
         $max = count($this->servers) - 1;
         $position = min($max, $this->serverPosition);
         $this->serverPosition = $position === $max ? 0 : $position + 1;

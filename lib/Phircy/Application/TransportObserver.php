@@ -17,7 +17,8 @@ use Phircy\Model\Connection;
  *
  * @package Phircy\Application
  */
-class TransportObserver implements \SplObserver {
+class TransportObserver implements \SplObserver
+{
     /**
      * @var \SplObjectStorage|Connection[]
      */
@@ -40,7 +41,8 @@ class TransportObserver implements \SplObserver {
      * @param \SplObjectStorage|Connection[] $connections
      * @param UpdateHandler $handler
      */
-    public function __construct(\SplObjectStorage $connections, UpdateHandler $handler) {
+    public function __construct(\SplObjectStorage $connections, UpdateHandler $handler)
+    {
         $this->connections = $connections;
         $this->handler = $handler;
     }
@@ -52,7 +54,8 @@ class TransportObserver implements \SplObserver {
      * @param mixed $event Optional event name supplied by Phipe
      * @param mixed $data Optional event data supplied by Phipe
      */
-    public function update(\SplSubject $subject, $event = NULL, $data = NULL) {
+    public function update(\SplSubject $subject, $event = null, $data = null)
+    {
         if ($subject instanceof IrcTransport) {
             // Update is relevant to us.
             $this->ircUpdate($subject, $event, $data);
@@ -66,7 +69,8 @@ class TransportObserver implements \SplObserver {
      * @param mixed $event Event name supplied by Phipe
      * @param mixed $data Event data supplied by Phipe
      */
-    protected function ircUpdate(IrcTransport $transport, $event, $data) {
+    protected function ircUpdate(IrcTransport $transport, $event, $data)
+    {
         $connection = $this->resolveConnectionFromTransport($transport);
 
         $this->pushToHandler($connection, $event, $data);
@@ -79,7 +83,8 @@ class TransportObserver implements \SplObserver {
      * @throws \UnexpectedValueException Thrown if no relevant Connection can be found
      * @return Connection
      */
-    protected function resolveConnectionFromTransport(IrcTransport $transport) {
+    protected function resolveConnectionFromTransport(IrcTransport $transport)
+    {
         // Compare the supplied IrcTransport instance to all IrcTransport instances, until a match is found.
         foreach ($this->connections as $connection) {
             if ($connection->transport === $transport) {
@@ -97,7 +102,8 @@ class TransportObserver implements \SplObserver {
      * @param mixed $event
      * @param mixed $data
      */
-    protected function pushToHandler(Connection $connection, $event, $data) {
+    protected function pushToHandler(Connection $connection, $event, $data)
+    {
         // Events not in the map are simply not relevant; they can be silently ignored.
         if (array_key_exists($event, self::$eventMethodMap)) {
             $method = self::$eventMethodMap[$event];
@@ -108,7 +114,8 @@ class TransportObserver implements \SplObserver {
     /**
      * @param Connection $connection
      */
-    protected function pushConnectToHandler(Connection $connection) {
+    protected function pushConnectToHandler(Connection $connection)
+    {
         $this->handler
             ->processConnect($this->connections, $connection);
     }
@@ -116,7 +123,8 @@ class TransportObserver implements \SplObserver {
     /**
      * @param Connection $connection
      */
-    protected function pushDisconnectToHandler(Connection $connection) {
+    protected function pushDisconnectToHandler(Connection $connection)
+    {
         $this->handler
             ->processDisconnect($this->connections, $connection);
     }
@@ -124,7 +132,8 @@ class TransportObserver implements \SplObserver {
     /**
      * @param Connection $connection
      */
-    protected function pushConnectFailedToHandler(Connection $connection) {
+    protected function pushConnectFailedToHandler(Connection $connection)
+    {
         $this->handler
             ->processConnectFail($this->connections, $connection);
     }
@@ -132,7 +141,8 @@ class TransportObserver implements \SplObserver {
     /**
      * @param Connection $connection
      */
-    protected function pushEventReadToHandler(Connection $connection) {
+    protected function pushEventReadToHandler(Connection $connection)
+    {
         $this->handler
             ->processRead($this->connections, $connection, $connection->transport->readLines());
     }
@@ -141,7 +151,8 @@ class TransportObserver implements \SplObserver {
      * @param Connection $connection
      * @param string $data
      */
-    protected function pushEventWriteToHandler(Connection $connection, $data) {
+    protected function pushEventWriteToHandler(Connection $connection, $data)
+    {
         $lines = preg_split("#\r?\n#", $data, -1, PREG_SPLIT_NO_EMPTY);
 
         $this->handler

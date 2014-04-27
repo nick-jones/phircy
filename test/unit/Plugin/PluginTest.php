@@ -5,38 +5,59 @@ namespace Phircy\Plugin;
 /**
  * @package Phircy\Plugin
  */
-class PluginTest extends \PHPUnit_Framework_TestCase {
+class PluginTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Plugin
      */
     protected $plugin;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->plugin = $this->getMockForAbstractClass('\Phircy\Plugin\Plugin');
     }
 
-    public function testMatch() {
+    public function testMatch()
+    {
         $method = $this->createMethod('match');
-        $method->invoke($this->plugin, 'mock', function(){});
+        $method->invoke(
+            $this->plugin,
+            'mock',
+            function () {
+            }
+        );
 
         $this->assertEquals(1, count($this->plugin->getListeners()));
     }
 
-    public function testMatchPattern() {
+    public function testMatchPattern()
+    {
         $method = $this->createMethod('matchPattern');
-        $method->invoke($this->plugin, 'mock*', function(){});
+        $method->invoke(
+            $this->plugin,
+            'mock*',
+            function () {
+            }
+        );
 
         $this->assertEquals(1, count($this->plugin->getListeners()));
     }
 
-    public function testMatchRegex() {
+    public function testMatchRegex()
+    {
         $method = $this->createMethod('matchRegex');
-        $method->invoke($this->plugin, 'mock.*', function(){});
+        $method->invoke(
+            $this->plugin,
+            'mock.*',
+            function () {
+            }
+        );
 
         $this->assertEquals(1, count($this->plugin->getListeners()));
     }
 
-    public function testGetListeners() {
+    public function testGetListeners()
+    {
         $this->assertEquals(array(), $this->plugin->getListeners());
     }
 
@@ -49,7 +70,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase {
      * @param string $methodName
      * @return \ReflectionMethod
      */
-    protected function createMethod($methodName) {
+    protected function createMethod($methodName)
+    {
         $method = new \ReflectionMethod('\Phircy\Plugin\Plugin', $methodName);
         $method->setAccessible(true);
 

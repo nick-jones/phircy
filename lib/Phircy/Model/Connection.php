@@ -5,7 +5,8 @@ namespace Phircy\Model;
 /**
  * @package Phircy\Model
  */
-class Connection {
+class Connection
+{
     /**
      * @var int
      */
@@ -14,7 +15,7 @@ class Connection {
     /**
      * @var bool
      */
-    public $connected = FALSE;
+    public $connected = false;
 
     /**
      * @var \Phircy\Connection\IrcTransport

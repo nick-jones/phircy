@@ -3,6 +3,7 @@
 namespace Phircy\Connection;
 
 use Phergie\Irc\GeneratorInterface;
+use Phipe\Connection\Buffering\BufferingFactory;
 use Phipe\Connection\Factory;
 
 /**
@@ -10,7 +11,8 @@ use Phipe\Connection\Factory;
  *
  * @package Phircy\Connection
  */
-class IrcFactory extends \Phipe\Connection\Buffering\BufferingFactory {
+class IrcFactory extends BufferingFactory
+{
     /**
      * @var \Phergie\Irc\GeneratorInterface
      */
@@ -20,7 +22,8 @@ class IrcFactory extends \Phipe\Connection\Buffering\BufferingFactory {
      * @param Factory $factory
      * @param GeneratorInterface $generator
      */
-    public function __construct(Factory $factory, GeneratorInterface $generator) {
+    public function __construct(Factory $factory, GeneratorInterface $generator)
+    {
         $this->generator = $generator;
 
         parent::__construct($factory);
@@ -32,7 +35,8 @@ class IrcFactory extends \Phipe\Connection\Buffering\BufferingFactory {
      * @param bool $ssl
      * @return IrcTransport
      */
-    public function createConnection($host, $port, $ssl = FALSE) {
+    public function createConnection($host, $port, $ssl = false)
+    {
         return new IrcTransport(
             $this->factory->createConnection($host, $port, $ssl),
             $this->generator

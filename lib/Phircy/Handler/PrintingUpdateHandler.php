@@ -4,7 +4,8 @@ namespace Phircy\Handler;
 
 use Phircy\Model\Connection;
 
-class PrintingUpdateHandler implements UpdateHandler {
+class PrintingUpdateHandler implements UpdateHandler
+{
     /**
      * @var resource
      */
@@ -13,7 +14,8 @@ class PrintingUpdateHandler implements UpdateHandler {
     /**
      * @param resource $handle
      */
-    public function __construct($handle) {
+    public function __construct($handle)
+    {
         $this->handle = $handle;
     }
 
@@ -21,7 +23,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection
      */
-    public function processConnect(\SplObjectStorage $connections, Connection $connection) {
+    public function processConnect(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->printMessage($connection, 'Connected!');
     }
 
@@ -29,7 +32,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection
      */
-    public function processDisconnect(\SplObjectStorage $connections, Connection $connection) {
+    public function processDisconnect(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->printMessage($connection, 'Disconnected!');
     }
 
@@ -37,7 +41,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage $connections
      * @param Connection $connection
      */
-    public function processConnectFail(\SplObjectStorage $connections, Connection $connection) {
+    public function processConnectFail(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->printMessage($connection, 'Connect failed!');
     }
 
@@ -46,7 +51,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      * @param array $lines
      */
-    public function processRead(\SplObjectStorage $connections, Connection $connection, array $lines) {
+    public function processRead(\SplObjectStorage $connections, Connection $connection, array $lines)
+    {
         foreach ($lines as $line) {
             $this->printMessage($connection, sprintf('← %s', $line));
         }
@@ -57,7 +63,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      * @param array $lines
      */
-    public function processWrite(\SplObjectStorage $connections, Connection $connection, array $lines) {
+    public function processWrite(\SplObjectStorage $connections, Connection $connection, array $lines)
+    {
         foreach ($lines as $line) {
             $this->printMessage($connection, sprintf('→ %s', $line));
         }
@@ -67,7 +74,8 @@ class PrintingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      * @param string $message
      */
-    protected function printMessage(Connection $connection, $message) {
+    protected function printMessage(Connection $connection, $message)
+    {
         $output = sprintf("[%s] (%s) %s\n", gmdate('Y-m-d H:i:s'), $connection->network->name, $message);
         fwrite($this->handle, $output);
     }

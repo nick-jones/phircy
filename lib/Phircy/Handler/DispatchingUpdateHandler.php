@@ -13,7 +13,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package Phircy\Handler
  */
-class DispatchingUpdateHandler implements UpdateHandler {
+class DispatchingUpdateHandler implements UpdateHandler
+{
     /**
      * @var EventDispatcherInterface
      */
@@ -34,7 +35,11 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param IrcParser $parser
      * @param EventFactory $eventFactory
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, IrcParser $parser, EventFactory $eventFactory) {
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        IrcParser $parser,
+        EventFactory $eventFactory
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->parser = $parser;
         $this->eventFactory = $eventFactory;
@@ -44,7 +49,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection
      */
-    public function processConnect(\SplObjectStorage $connections, Connection $connection) {
+    public function processConnect(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->dispatchEvent('socket.connect', $connections, $connection);
     }
 
@@ -52,7 +58,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage|Connection[] $connections
      * @param Connection $connection
      */
-    public function processDisconnect(\SplObjectStorage $connections, Connection $connection) {
+    public function processDisconnect(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->dispatchEvent('socket.disconnect', $connections, $connection);
     }
 
@@ -60,7 +67,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage $connections
      * @param Connection $connection
      */
-    public function processConnectFail(\SplObjectStorage $connections, Connection $connection) {
+    public function processConnectFail(\SplObjectStorage $connections, Connection $connection)
+    {
         $this->dispatchEvent('socket.connect_fail', $connections, $connection);
     }
 
@@ -69,7 +77,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      * @param array $lines
      */
-    public function processRead(\SplObjectStorage $connections, Connection $connection, array $lines) {
+    public function processRead(\SplObjectStorage $connections, Connection $connection, array $lines)
+    {
         foreach ($lines as $line) {
             $this->dispatchIrcEvent($connections, $connection, $line, 'irc');
         }
@@ -80,7 +89,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param Connection $connection
      * @param array $lines
      */
-    public function processWrite(\SplObjectStorage $connections, Connection $connection, array $lines) {
+    public function processWrite(\SplObjectStorage $connections, Connection $connection, array $lines)
+    {
         foreach ($lines as $line) {
             $this->dispatchIrcEvent($connections, $connection, $line, 'irc.write');
         }
@@ -93,7 +103,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param \SplObjectStorage $connections
      * @param Connection $connection
      */
-    protected function dispatchEvent($eventName, \SplObjectStorage $connections, Connection $connection) {
+    protected function dispatchEvent($eventName, \SplObjectStorage $connections, Connection $connection)
+    {
         $event = new IrcEvent();
         $event->setConnection($connection);
         $event->setConnections($connections);
@@ -110,7 +121,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param $line
      * @param $eventPrefix
      */
-    protected function dispatchIrcEvent(\SplObjectStorage $connections, Connection $connection, $line, $eventPrefix) {
+    protected function dispatchIrcEvent(\SplObjectStorage $connections, Connection $connection, $line, $eventPrefix)
+    {
         $event = $this->eventFromIrcLine($line);
         $event->setConnection($connection);
         $event->setConnections($connections);
@@ -127,7 +139,8 @@ class DispatchingUpdateHandler implements UpdateHandler {
      * @param string $line
      * @return IrcEvent
      */
-    protected function eventFromIrcLine($line) {
+    protected function eventFromIrcLine($line)
+    {
         $parserOutput = $this->parser->parse($line);
 
         return $this->eventFactory

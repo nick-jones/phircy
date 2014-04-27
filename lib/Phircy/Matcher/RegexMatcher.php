@@ -7,7 +7,8 @@ namespace Phircy\Matcher;
  *
  * @package Phircy\Matcher
  */
-class RegexMatcher implements Matcher {
+class RegexMatcher implements Matcher
+{
     /**
      * @var string
      */
@@ -16,7 +17,8 @@ class RegexMatcher implements Matcher {
     /**
      * @param string $pattern
      */
-    public function __construct($pattern) {
+    public function __construct($pattern)
+    {
         $this->pattern = $pattern;
     }
 
@@ -24,7 +26,8 @@ class RegexMatcher implements Matcher {
      * @param string $message
      * @return bool
      */
-    public function matches($message) {
-        return (bool) preg_match($this->pattern, $message);
+    public function matches($message)
+    {
+        return (bool)preg_match($this->pattern, $message);
     }
 }

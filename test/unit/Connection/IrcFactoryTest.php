@@ -2,7 +2,8 @@
 
 namespace Phircy\Connection;
 
-class IrcFactoryTest extends \PHPUnit_Framework_TestCase {
+class IrcFactoryTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var IrcFactory
      */
@@ -18,17 +19,19 @@ class IrcFactoryTest extends \PHPUnit_Framework_TestCase {
      */
     protected $generator;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Factory');
         $this->generator = $this->getMock('\Phergie\Irc\GeneratorInterface');
 
         $this->factory = new IrcFactory($this->proxied, $this->generator);
     }
 
-    public function testCreateConnection() {
+    public function testCreateConnection()
+    {
         $host = 'irc.mock.example';
         $port = 6667;
-        $ssl = FALSE;
+        $ssl = false;
 
         $this->proxied->expects($this->once())
             ->method('createConnection')

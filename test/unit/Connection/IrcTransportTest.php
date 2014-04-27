@@ -2,7 +2,8 @@
 
 namespace Phircy\Connection;
 
-class IrcTransportTest extends \PHPUnit_Framework_TestCase {
+class IrcTransportTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var IrcTransport
      */
@@ -18,14 +19,16 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase {
      */
     protected $generator;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Connection');
         $this->generator = $this->getMock('\Phergie\Irc\GeneratorInterface');
 
         $this->transport = new IrcTransport($this->proxied, $this->generator);
     }
 
-    public function testCallHook_Write() {
+    public function testCallHook_Write()
+    {
         $nick = 'Mock';
 
         $this->generator->expects($this->once())
@@ -38,13 +41,15 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase {
         $this->transport->__call('writeNick', array($nick));
     }
 
-    public function testCallHook_NonWrite() {
+    public function testCallHook_NonWrite()
+    {
         $this->setExpectedException('\BadMethodCallException', 'Undefined method');
 
         $this->transport->__call('foo', array());
     }
 
-    public function testWriteCommand() {
+    public function testWriteCommand()
+    {
         $server = 'irc.mock.example';
         $message = sprintf("PONG :%s\r\n", $server);
 
@@ -60,13 +65,15 @@ class IrcTransportTest extends \PHPUnit_Framework_TestCase {
         $this->transport->writeCommand('pong', array($server));
     }
 
-    public function testWriteCommand_InvalidCommand() {
+    public function testWriteCommand_InvalidCommand()
+    {
         $this->setExpectedException('\InvalidArgumentException', 'Command "foo" does not exist');
 
         $this->transport->writeCommand('foo', array());
     }
 
-    public function testReadAll() {
+    public function testReadAll()
+    {
         $this->transport->setReadBuffer("foo\r\nbar\nbaz\n");
 
         $result = $this->transport->readLines();

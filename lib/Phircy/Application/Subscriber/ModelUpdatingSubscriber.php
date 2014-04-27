@@ -6,6 +6,7 @@ use Phircy\Event\IrcEvent;
 use Phircy\Event\Priorities;
 use Phircy\Event\TargetedIrcEvent;
 use Phircy\Model\Channel;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * This subscriber should ensure the IRC model components are updated by relevant IRC events (e.g. JOINs, PARTs, etc.).
@@ -15,11 +16,13 @@ use Phircy\Model\Channel;
  *
  * @package Phircy\Application\Subscriber
  */
-class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\EventSubscriberInterface {
+class ModelUpdatingSubscriber implements EventSubscriberInterface
+{
     /**
      * @return array
      */
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return array(
             'socket.connect' => array('onSocketConnect', Priorities::PHIRCY_STANDARD),
             'socket.disconnect' => array('onSocketDisconnect', Priorities::PHIRCY_STANDARD),
@@ -35,9 +38,10 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onSocketConnect(IrcEvent $event) {
+    public static function onSocketConnect(IrcEvent $event)
+    {
         $event->getConnection()
-            ->connected = TRUE;
+            ->connected = true;
     }
 
     /**
@@ -45,9 +49,10 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onSocketDisconnect(IrcEvent $event) {
+    public static function onSocketDisconnect(IrcEvent $event)
+    {
         $event->getConnection()
-            ->connected = FALSE;
+            ->connected = false;
     }
 
     /**
@@ -55,10 +60,11 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrcConnect(IrcEvent $event) {
+    public static function onIrcConnect(IrcEvent $event)
+    {
         $event->getConnection()
             ->network
-            ->connected = TRUE;
+            ->connected = true;
     }
 
     /**
@@ -66,10 +72,11 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrcDisconnect(IrcEvent $event) {
+    public static function onIrcDisconnect(IrcEvent $event)
+    {
         $event->getConnection()
             ->network
-            ->connected = FALSE;
+            ->connected = false;
     }
 
     /**
@@ -77,7 +84,8 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrcJoin(IrcEvent $event) {
+    public static function onIrcJoin(IrcEvent $event)
+    {
         $params = $event->getParams();
         $name = $params['channels'];
 
@@ -91,7 +99,8 @@ class ModelUpdatingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param TargetedIrcEvent $event
      */
-    public static function onIrcPart(TargetedIrcEvent $event) {
+    public static function onIrcPart(TargetedIrcEvent $event)
+    {
         $params = $event->getParams();
         $name = $params['channels'];
 

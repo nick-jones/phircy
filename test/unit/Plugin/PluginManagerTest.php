@@ -5,7 +5,8 @@ namespace Phircy\Plugin;
 /**
  * @package Phircy\Plugin
  */
-class PluginManagerTest extends \PHPUnit_Framework_TestCase {
+class PluginManagerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var PluginManager
      */
@@ -21,7 +22,8 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
      */
     protected $pluginPath;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $fileName = sprintf('%s.php', $this->pluginName);
         $this->pluginPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 
@@ -36,22 +38,32 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
     /**
      * Copies our mock plugin into the temporary plugin path.
      */
-    protected function setUpPlugin() {
-        $source = implode(DIRECTORY_SEPARATOR, array(
-            __DIR__, '..', '..', 'helper', 'MockPluginTemplate.txt'
-        ));
+    protected function setUpPlugin()
+    {
+        $source = implode(
+            DIRECTORY_SEPARATOR,
+            array(
+                __DIR__,
+                '..',
+                '..',
+                'helper',
+                'MockPluginTemplate.txt'
+            )
+        );
 
         $contents = sprintf(file_get_contents($source), $this->pluginName);
         file_put_contents($this->pluginPath, $contents);
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         if (is_file($this->pluginPath)) {
             unlink($this->pluginPath);
         }
     }
 
-    public function testLoad() {
+    public function testLoad()
+    {
         $this->setUpPlugin();
 
         $this->manager->load();
@@ -62,7 +74,8 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('Phircy\Plugins\PhircyMockPlugin', get_class($plugins[0]));
     }
 
-    public function testLoad_MissingFile() {
+    public function testLoad_MissingFile()
+    {
         $this->setExpectedException('\Phircy\Plugin\LoadException', 'Plugin file could not be found');
 
         $this->pluginName = 'PhircyMockFoo';
@@ -71,7 +84,8 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
         $this->manager->load();
     }
 
-    public function testLoad_MissingClass() {
+    public function testLoad_MissingClass()
+    {
         $this->setExpectedException(
             '\Phircy\Plugin\LoadException',
             'Plugin class "\Phircy\Plugins\PhircyMockBar" could not be resolved'
@@ -86,7 +100,8 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase {
         $this->manager->load();
     }
 
-    public function testGetPlugins() {
+    public function testGetPlugins()
+    {
         $this->assertEquals(2, count($this->manager->getPlugins()));
     }
 }

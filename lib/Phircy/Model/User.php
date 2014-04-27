@@ -5,7 +5,8 @@ namespace Phircy\Model;
 /**
  * @package Phircy\Model
  */
-class User {
+class User
+{
     /**
      * @var string
      */

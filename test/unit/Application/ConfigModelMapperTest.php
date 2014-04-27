@@ -2,26 +2,31 @@
 
 namespace Phircy\Application;
 
-class ConfigModelMapperTest extends \PHPUnit_Framework_TestCase {
+class ConfigModelMapperTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var ConfigModelMapper
      */
     protected $mapper;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->mapper = new ConfigModelMapper();
     }
 
-    public function testCreateConnections() {
+    public function testCreateConnections()
+    {
         $host = 'irc.mock.example';
         $id = 7;
 
-        $connections = $this->mapper->createConnections(array(
-            $id => array(
-                'servers' => array('host' => $host),
-                'name' => 'mock'
+        $connections = $this->mapper->createConnections(
+            array(
+                $id => array(
+                    'servers' => array('host' => $host),
+                    'name' => 'mock'
+                )
             )
-        ));
+        );
 
         $connections->rewind();
         /** @var \Phircy\Model\Connection $connection */
@@ -34,24 +39,32 @@ class ConfigModelMapperTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($id, $connection->id);
     }
 
-    public function testCreateNetwork() {
+    public function testCreateNetwork()
+    {
         $host = 'irc.mock.example';
 
-        $network = $this->mapper->createNetwork('mock', array(
-            'host' => $host
-        ));
+        $network = $this->mapper->createNetwork(
+            'mock',
+            array(
+                'host' => $host
+            )
+        );
 
         $this->assertInstanceOf('\Phircy\Model\Network', $network);
         $this->assertEquals($host, $network->servers[0]->host);
     }
 
-    public function testCreateNetwork_Address() {
+    public function testCreateNetwork_Address()
+    {
         $host = 'irc.mock.example';
         $port = 7000;
 
-        $network = $this->mapper->createNetwork('mock', array(
-            sprintf('%s:+%d', $host, $port)
-        ));
+        $network = $this->mapper->createNetwork(
+            'mock',
+            array(
+                sprintf('%s:+%d', $host, $port)
+            )
+        );
 
         $this->assertInstanceOf('\Phircy\Model\Network', $network);
         $this->assertEquals($host, $network->servers[0]->host);
@@ -59,15 +72,18 @@ class ConfigModelMapperTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($network->servers[0]->ssl);
     }
 
-    public function testCreateServer() {
+    public function testCreateServer()
+    {
         $host = 'irc.mock.example';
         $port = 7000;
 
-        $server = $this->mapper->createServer(array(
-            'host' => $host,
-            'port' => $port,
-            'ssl' => TRUE
-        ));
+        $server = $this->mapper->createServer(
+            array(
+                'host' => $host,
+                'port' => $port,
+                'ssl' => true
+            )
+        );
 
         $this->assertEquals($host, $server->host);
         $this->assertEquals($port, $server->port);

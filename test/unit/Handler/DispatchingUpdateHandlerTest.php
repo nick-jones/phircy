@@ -2,7 +2,8 @@
 
 namespace Phircy\Handler;
 
-class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
+class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var DispatchingUpdateHandler
      */
@@ -23,7 +24,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
      */
     protected $eventFactory;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->parser = $this->getMock('\Phircy\Parser\IrcParser');
         $this->eventFactory = $this->getMock('\Phircy\Event\EventFactory');
@@ -31,7 +33,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler = new DispatchingUpdateHandler($this->eventDispatcher, $this->parser, $this->eventFactory);
     }
 
-    public function testProcessConnect() {
+    public function testProcessConnect()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');
 
@@ -42,7 +45,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler->processConnect($connections, $connection);
     }
 
-    public function testProcessDisconnect() {
+    public function testProcessDisconnect()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');
 
@@ -53,7 +57,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler->processDisconnect($connections, $connection);
     }
 
-    public function testProcessConnectFailed() {
+    public function testProcessConnectFailed()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');
 
@@ -64,7 +69,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler->processConnectFail($connections, $connection);
     }
 
-    public function testProcessRead() {
+    public function testProcessRead()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');
         $command = 'NICK';
@@ -95,7 +101,8 @@ class DispatchingUpdateHandlerTest extends \PHPUnit_Framework_TestCase {
         $this->handler->processRead($connections, $connection, array($message));
     }
 
-    public function testProcessWrite() {
+    public function testProcessWrite()
+    {
         $connections = new \SplObjectStorage();
         $connection = $this->getMock('\Phircy\Model\Connection');
         $command = 'PART';

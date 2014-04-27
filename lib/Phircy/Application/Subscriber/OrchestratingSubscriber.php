@@ -6,6 +6,7 @@ use Phircy\Event\IrcEvent;
 use Phircy\Event\Priorities;
 use Phircy\Model\Connection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * The job of the OrchestratingSubscriber is to ensure all IRC movement (connections, disconnections, etc,) are handled
@@ -13,7 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package Phircy\Application\Subscriber
  */
-class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\EventSubscriberInterface {
+class OrchestratingSubscriber implements EventSubscriberInterface
+{
     /**
      * @var array|\Phircy\ApplicationConfig
      */
@@ -22,14 +24,16 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
     /**
      * @param array|\Phircy\ApplicationConfig $config
      */
-    public function __construct($config) {
+    public function __construct($config)
+    {
         self::$config = $config;
     }
 
     /**
      * @return array
      */
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return array(
             'socket.connect' => array('onSocketConnect', Priorities::PHIRCY_STANDARD),
             'socket.disconnect' => array('onSocketDisconnect', Priorities::PHIRCY_PRE),
@@ -46,7 +50,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onSocketConnect(IrcEvent $event) {
+    public static function onSocketConnect(IrcEvent $event)
+    {
         $connection = $event->getConnection();
         $details = self::networkDetailsFromConnection($connection);
         $transport = $connection->transport;
@@ -62,7 +67,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      * @param string $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public static function onIrc001(IrcEvent $event, $eventName, EventDispatcherInterface $dispatcher) {
+    public static function onIrc001(IrcEvent $event, $eventName, EventDispatcherInterface $dispatcher)
+    {
         $dispatcher->dispatch('irc.connect', $event);
     }
 
@@ -73,7 +79,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      * @param $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public static function onSocketDisconnect(IrcEvent $event, $eventName, EventDispatcherInterface $dispatcher) {
+    public static function onSocketDisconnect(IrcEvent $event, $eventName, EventDispatcherInterface $dispatcher)
+    {
         $dispatcher->dispatch('irc.disconnect', $event);
     }
 
@@ -84,7 +91,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onSocketConnectFail(IrcEvent $event) {
+    public static function onSocketConnectFail(IrcEvent $event)
+    {
         $connection = $event->getConnection();
         $transport = $connection->transport;
 
@@ -101,7 +109,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrcConnect(IrcEvent $event) {
+    public static function onIrcConnect(IrcEvent $event)
+    {
         $connection = $event->getConnection();
         $details = self::networkDetailsFromConnection($connection);
         $channels = isset($details['channels']) ? $details['channels'] : array();
@@ -117,7 +126,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrcPing(IrcEvent $event) {
+    public static function onIrcPing(IrcEvent $event)
+    {
         $params = $event->getParams();
         $server = array_shift($params);
 
@@ -131,7 +141,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      *
      * @param IrcEvent $event
      */
-    public static function onIrc433(IrcEvent $event) {
+    public static function onIrc433(IrcEvent $event)
+    {
         $connection = $event->getConnection();
         $details = self::networkDetailsFromConnection($connection);
 
@@ -147,7 +158,8 @@ class OrchestratingSubscriber implements \Symfony\Component\EventDispatcher\Even
      * @param Connection $connection
      * @return array
      */
-    protected static function networkDetailsFromConnection(Connection $connection) {
+    protected static function networkDetailsFromConnection(Connection $connection)
+    {
         return self::$config['networks'][$connection->id];
     }
 }
