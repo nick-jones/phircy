@@ -75,19 +75,20 @@ A basic example of a plugin that performs a "coin flip" when `!flip` is sent to 
 
 namespace Phircy\Plugins;
 
-class Flip extends \Phircy\Plugin\Plugin {
+class Flip extends \Phircy\Plugin\Plugin
+{
     /**
      * Create a matcher for the !flip command.
      */
     public function __construct() {
-        $this->match('flip', array($this, 'onFlip'));
+        $this->match('flip', [$this, 'onFlip']);
     }
 
     /**
      * @param \Phircy\Event\TargetedIrcEvent $event
      */
     public function onFlip(\Phircy\Event\TargetedIrcEvent $event) {
-        static $sides = array('heads', 'tails');
+        static $sides = ['heads', 'tails'];
 
         $params = $event->getParams();
         $result = $sides[mt_rand(0, 1)];
