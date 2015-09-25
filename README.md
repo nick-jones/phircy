@@ -1,6 +1,6 @@
 # Phircy (Alpha)
 
-[![Build Status](https://travis-ci.org/nick-jones/Phircy.svg?branch=master)](https://travis-ci.org/nick-jones/Phircy) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nick-jones/Phircy/badges/quality-score.png?s=1ce1dfac76359d4c17af86c18155fa12a7edc94a)](https://scrutinizer-ci.com/g/nick-jones/Phircy/) [![Code Coverage](https://scrutinizer-ci.com/g/nick-jones/Phircy/badges/coverage.png?s=f35f536f1ab3eb3f2917c3329591e804f9b4783e)](https://scrutinizer-ci.com/g/nick-jones/Phircy/)
+[![Build Status](https://travis-ci.org/nick-jones/phircy.svg?branch=master)](https://travis-ci.org/nick-jones/phircy) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nick-jones/Phircy/badges/quality-score.png?s=1ce1dfac76359d4c17af86c18155fa12a7edc94a)](https://scrutinizer-ci.com/g/nick-jones/Phircy/) [![Code Coverage](https://scrutinizer-ci.com/g/nick-jones/Phircy/badges/coverage.png?s=f35f536f1ab3eb3f2917c3329591e804f9b4783e)](https://scrutinizer-ci.com/g/nick-jones/Phircy/)
 
 Phircy is an IRC bot library, for PHP.
 
